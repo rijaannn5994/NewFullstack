@@ -74,6 +74,7 @@ export class SupplierComponent implements OnInit {
   }
 
   onSearch(): void {
+    this.currentPage = 1;
     this.filterSuppliers();
   }
 
@@ -82,33 +83,24 @@ export class SupplierComponent implements OnInit {
   }
 
   filterSuppliers(): void {
-    let filtered = [...this.suppliers];
+  let filtered = [...this.suppliers];
 
-    // Search filter
-    if (this.searchTerm) {
-      const term = this.searchTerm.toLowerCase();
-      filtered = filtered.filter(supplier =>
-        supplier.supplier_name?.toLowerCase().includes(term) ||
-        supplier.supplier_id?.toLowerCase().includes(term) ||
-        supplier.email?.toLowerCase().includes(term)
-      );
+  //Sort logic
+  filtered.sort((a, b) => {
+    const aVal = a[this.sortBy as keyof Supplier];
+    const bVal = b[this.sortBy as keyof Supplier];
+    
+    if (typeof aVal === 'string' && typeof bVal === 'string') {
+      return aVal.localeCompare(bVal);
     }
+    if (typeof aVal === 'number' && typeof bVal === 'number') {
+      return bVal - aVal; // Descending for reliability score
+    }
+    return 0;
+  });
 
-    // Sort
-    filtered.sort((a, b) => {
-      const aVal = a[this.sortBy as keyof Supplier];
-      const bVal = b[this.sortBy as keyof Supplier];
-      if (typeof aVal === 'string' && typeof bVal === 'string') {
-        return aVal.localeCompare(bVal);
-      }
-      if (typeof aVal === 'number' && typeof bVal === 'number') {
-        return bVal - aVal; // Descending for reliability score
-      }
-      return 0;
-    });
-
-    this.filteredSuppliers = filtered;
-  }
+  this.filteredSuppliers = filtered;
+}
 
   getReliabilityClass(score: number): string {
     if (score >= 90) return 'bg-green-100 text-green-800 border-green-200';
@@ -181,7 +173,8 @@ export class SupplierComponent implements OnInit {
 
   confirmDelete(): void {
     if (this.deletingSupplier) {
-      this.supplierService.delete(this.deletingSupplier._id).subscribe({
+      // CHANGED: Use supplier_id instead of _id
+      this.supplierService.delete(this.deletingSupplier.supplier_id).subscribe({
         next: () => {
           this.loadSuppliers();
           this.closeDeleteModal();
@@ -238,31 +231,27 @@ export class SupplierComponent implements OnInit {
 
   // Pagination variables
   currentPage = 1;
-  pageSize = 10;
+  pageSize = 12;
   hasNextPage = true; // Tracks if we should disable the 'Next' button
 
   // ... constructor and ngOnInit ...
 
   loadItems(): void {
     this.isLoading = true;
-    this.error = null;
+  this.error = null;
 
-    // Pass the pagination variables to the service
-    this.supplierService.getAll(this.currentPage, this.pageSize).subscribe({
-      next: (data) => {
-        this.suppliers = data;
-        
-        // If the backend returns fewer items than the page size, we are on the last page!
-        this.hasNextPage = data.length === this.pageSize; 
-        
-        this.filterSuppliers();
-        this.isLoading = false;
-      },
-      error: (err) => {
-        this.error = err.message;
-        this.isLoading = false;
-      }
-    });
+  this.supplierService.getAll(this.currentPage, this.pageSize, this.searchTerm).subscribe({
+    next: (data) => {
+      this.suppliers = data;
+      this.hasNextPage = data.length === this.pageSize;
+      this.filterSuppliers(); 
+      this.isLoading = false;
+    },
+    error: (err) => {
+      this.error = err.message;
+      this.isLoading = false;
+    }
+  });
   }
 
   // Add these two new methods to handle button clicks

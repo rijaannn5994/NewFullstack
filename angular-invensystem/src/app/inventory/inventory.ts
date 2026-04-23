@@ -35,7 +35,7 @@ export class InventoryComponent implements OnInit {
   // Form data
   itemForm: Partial<InventoryItem> = this.getEmptyForm();
 
-  categories = ['IT Equipment', 'Office Furniture', 'Supplies', 'Electronics'];
+categories: string[] = [];
 
   constructor(
     private inventoryService: InventoryDataService,
@@ -47,7 +47,7 @@ export class InventoryComponent implements OnInit {
   inventory_list: InventoryItem[] = [];
 
   page: number = 1;
-  inventoryData = { pageSize: 10 };
+  inventoryData = { pageSize: 12 };
 
   ngOnInit(): void {
     this.authService.userRole$.subscribe(role => {
@@ -66,7 +66,8 @@ export class InventoryComponent implements OnInit {
   }
 
   onSearch(): void {
-    this.filterItems();
+    this.currentPage = 1;
+    this.loadItems();
   }
 
   onCategoryChange(): void {
@@ -80,20 +81,10 @@ export class InventoryComponent implements OnInit {
   filterItems(): void {
     let filtered = [...this.items];
 
-    // Search filter
-    if (this.searchTerm) {
-      const term = this.searchTerm.toLowerCase();
-      filtered = filtered.filter(item =>
-        item.item_name?.toLowerCase().includes(term) ||
-        item.item_id?.toLowerCase().includes(term) ||
-        item.category?.toLowerCase().includes(term)
-      );
-    }
-
     // Category filter
     if (this.selectedCategory !== 'all') {
-      filtered = filtered.filter(item => item.category === this.selectedCategory);
-    }
+    filtered = filtered.filter(item => item.category === this.selectedCategory);
+  }
 
     // Sort
     filtered.sort((a, b) => {
@@ -128,13 +119,15 @@ export class InventoryComponent implements OnInit {
   openAddModal(): void {
     this.editingItem = null;
     this.itemForm = this.getEmptyForm();
+    this.selectedFile = null; // Reset
     this.showItemModal = true;
   }
 
   openEditModal(item: InventoryItem): void {
     this.editingItem = item;
-    this.itemForm = { ...item };
-    this.showItemModal = true;
+  this.itemForm = { ...item };
+  this.selectedFile = null; // Reset
+  this.showItemModal = true;
   }
 
   closeItemModal(): void {
@@ -145,25 +138,30 @@ export class InventoryComponent implements OnInit {
 
   saveItem(): void {
     const itemData = this.prepareItemData();
+    const targetId = this.editingItem ? this.editingItem.item_id : itemData.item_id;
+
+    console.log("1. Saving item data...", itemData);
 
     if (this.editingItem) {
-      this.inventoryService.update(this.editingItem._id, itemData).subscribe({
+      this.inventoryService.update(targetId, itemData).subscribe({
         next: () => {
-          this.loadItems();
-          this.closeItemModal();
+          console.log("2. Item updated successfully. Starting image upload...");
+          this.handleImageUpload(targetId);
         },
         error: (err) => {
-          this.error = err.message;
+          console.error("Item Update Failed:", err);
+          alert("Failed to save item: " + err.message); // Show error popup
         }
       });
     } else {
       this.inventoryService.create(itemData).subscribe({
         next: () => {
-          this.loadItems();
-          this.closeItemModal();
+          console.log("2. Item created successfully. Starting image upload...");
+          this.handleImageUpload(targetId);
         },
         error: (err) => {
-          this.error = err.message;
+          console.error("Item Create Failed:", err);
+          alert("Failed to create item: " + err.message); // Show error popup
         }
       });
     }
@@ -181,7 +179,7 @@ export class InventoryComponent implements OnInit {
 
   confirmDelete(): void {
     if (this.deletingItem) {
-      this.inventoryService.delete(this.deletingItem._id).subscribe({
+      this.inventoryService.delete(this.deletingItem.item_id).subscribe({
         next: () => {
           this.loadItems();
           this.closeDeleteModal();
@@ -207,11 +205,26 @@ export class InventoryComponent implements OnInit {
     return this.userRole === 'Admin';
   }
 
+  // Make sure the port (5000 or 5001) matches your Flask backend!
+  getPhotoUrl(photoPath: string | undefined): string {
+    if (!photoPath) {
+      return 'https://via.placeholder.com/150?text=No+Image'; 
+    }
+    
+    // If the image is stored as Base64 in MongoDB, return it directly!
+    if (photoPath.startsWith('data:image')) {
+      return photoPath;
+    }
+    
+    // Fallback for any older images you already saved locally
+    return `http://localhost:5001${photoPath}`;
+  }
+
   private getEmptyForm(): Partial<InventoryItem> {
     return {
       item_id: '',
       item_name: '',
-      category: 'IT Equipment',
+      category: '',
       quantity_in_stock: 0,
       reorder_level: 0,
       supplier_id: '',
@@ -242,7 +255,7 @@ export class InventoryComponent implements OnInit {
   }
   
   currentPage = 1;
-  pageSize = 10;
+  pageSize = 12;
   hasNextPage = true; 
 
   // ... constructor and ngOnInit ...
@@ -250,15 +263,16 @@ export class InventoryComponent implements OnInit {
     this.isLoading = true;
     this.error = null;
 
-    // Pass the pagination variables to the service
-    this.inventoryService.getAll(this.currentPage, this.pageSize).subscribe({
+    this.inventoryService.getAll(this.currentPage, this.pageSize, this.searchTerm).subscribe({
       next: (data) => {
         this.items = data;
+        this.hasNextPage = data.length === this.pageSize;
         
-        // If the backend returns fewer items than the page size, we are on the last page!
-        this.hasNextPage = data.length === this.pageSize; 
+        // ADD THIS: Extract unique categories from the items dynamically
+        const uniqueCategories = new Set(data.map(item => item.category));
+        this.categories = Array.from(uniqueCategories).filter(cat => cat); // filter removes any blank ones
         
-        this.filterItems();
+        this.filterItems(); 
         this.isLoading = false;
       },
       error: (err) => {
@@ -282,6 +296,46 @@ export class InventoryComponent implements OnInit {
       this.loadItems(); // Fetch the previous page
     }
   }  
+
+  // Add this property at the top of your class
+selectedFile: File | null = null;
+
+// Add this method to handle file selection
+onFileSelected(event: any): void {
+  const file: File = event.target.files[0];
+  if (file) {
+    this.selectedFile = file;
+  }
 }
+
+// Add this new helper method
+handleImageUpload(itemId: string): void {
+    if (this.selectedFile) {
+      console.log("3. Uploading file:", this.selectedFile.name);
+      
+      this.inventoryService.uploadPhoto(itemId, this.selectedFile).subscribe({
+        next: (response) => {
+          console.log("4. Image upload success!", response);
+          this.loadItems();
+          this.closeItemModal();
+        },
+        error: (err) => {
+          console.error("Image Upload Failed:", err);
+          alert("Item saved, but image upload failed. Check console for details.");
+          
+          // Even if image fails, close the modal because the item DID save
+          this.loadItems();
+          this.closeItemModal();
+        }
+      });
+    } else {
+      console.log("3. No file selected. Skipping image upload.");
+      this.loadItems();
+      this.closeItemModal();
+    }
+  }
+}
+
+
 
 
