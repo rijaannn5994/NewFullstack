@@ -1,0 +1,4 @@
+/* Navigation component styles */
+nav {
+  backdrop-filter: blur(10px);
+}
