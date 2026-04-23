@@ -10,20 +10,33 @@
         <h1 class="text-3xl font-bold text-gray-900">Inventory Management</h1>
         <p class="text-gray-600 mt-1">Manage your inventory items</p>
       </div>
-      <button 
-        *ngIf="isAdmin()" 
-        (click)="openAddModal()" 
+      <button
+        *ngIf="isAdmin()"
+        (click)="openAddModal()"
         class="px-6 py-3 bg-gradient-to-r from-gray-900 to-gray-800 text-white rounded-xl hover:from-gray-800 hover:to-gray-700 transition-all font-medium shadow-lg flex items-center gap-2"
       >
-        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
+        <svg
+          class="w-5 h-5"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M12 4v16m8-8H4"
+          />
         </svg>
         Add Item
       </button>
     </div>
 
     <!-- Error Display -->
-    <div *ngIf="error" class="mb-6 bg-red-50 border-2 border-red-200 rounded-xl p-4">
+    <div
+      *ngIf="error"
+      class="mb-6 bg-red-50 border-2 border-red-200 rounded-xl p-4"
+    >
       <p class="text-red-800 font-medium">{{ error }}</p>
     </div>
 
@@ -32,10 +45,12 @@
       <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
         <!-- Search -->
         <div>
-          <label class="block text-sm font-medium text-gray-700 mb-2">Search</label>
-          <input 
-            type="text" 
-            [(ngModel)]="searchTerm" 
+          <label class="block text-sm font-medium text-gray-700 mb-2"
+            >Search</label
+          >
+          <input
+            type="text"
+            [(ngModel)]="searchTerm"
             (ngModelChange)="onSearch()"
             placeholder="Search items..."
             class="w-full px-4 py-2 border-2 border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-gray-900 focus:border-gray-900"
@@ -44,22 +59,28 @@
 
         <!-- Category Filter -->
         <div>
-          <label class="block text-sm font-medium text-gray-700 mb-2">Category</label>
-          <select 
-            [(ngModel)]="selectedCategory" 
+          <label class="block text-sm font-medium text-gray-700 mb-2"
+            >Category</label
+          >
+          <select
+            [(ngModel)]="selectedCategory"
             (ngModelChange)="onCategoryChange()"
             class="w-full px-4 py-2 border-2 border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-gray-900 focus:border-gray-900"
           >
             <option value="all">All Categories</option>
-            <option *ngFor="let cat of categories" [value]="cat">{{ cat }}</option>
+            <option *ngFor="let cat of categories" [value]="cat">
+              {{ cat }}
+            </option>
           </select>
         </div>
 
         <!-- Sort -->
         <div>
-          <label class="block text-sm font-medium text-gray-700 mb-2">Sort By</label>
-          <select 
-            [(ngModel)]="sortBy" 
+          <label class="block text-sm font-medium text-gray-700 mb-2"
+            >Sort By</label
+          >
+          <select
+            [(ngModel)]="sortBy"
             (ngModelChange)="onSortChange()"
             class="w-full px-4 py-2 border-2 border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-gray-900 focus:border-gray-900"
           >
@@ -73,34 +94,54 @@
 
     <!-- Loading State -->
     <div *ngIf="isLoading" class="text-center py-12">
-      <div class="w-16 h-16 border-4 border-gray-200 border-t-gray-900 rounded-full animate-spin mx-auto mb-4"></div>
+      <div
+        class="w-16 h-16 border-4 border-gray-200 border-t-gray-900 rounded-full animate-spin mx-auto mb-4"
+      ></div>
       <p class="text-gray-600">Loading inventory...</p>
     </div>
 
     <!-- Inventory Grid -->
-    <div *ngIf="!isLoading" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-      <div 
-        *ngFor="let item of filteredItems" 
+    <div
+      *ngIf="!isLoading"
+      class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
+    >
+      <div
+        *ngFor="let item of filteredItems"
         class="bg-white rounded-xl border-2 border-gray-200 overflow-hidden hover:shadow-2xl hover:border-gray-900 transition-all duration-300 cursor-pointer"
         (click)="openDetailSheet(item)"
       >
         <!-- Item Image -->
         <div class="relative aspect-square bg-gray-100 overflow-hidden">
-          <img 
-            *ngIf="item.photos && item.photos.length > 0" 
-            [src]="item.photos[0]" 
+          <img
+            *ngIf="item.photos && item.photos.length > 0"
+            [src]="item.photos[0]"
             [alt]="item.item_name"
             class="w-full h-full object-cover"
           />
-          <div *ngIf="!item.photos || item.photos.length === 0" class="w-full h-full flex items-center justify-center">
-            <svg class="w-20 h-20 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/>
+          <div
+            *ngIf="!item.photos || item.photos.length === 0"
+            class="w-full h-full flex items-center justify-center"
+          >
+            <svg
+              class="w-20 h-20 text-gray-400"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"
+              />
             </svg>
           </div>
-          
+
           <!-- Stock Status Badge -->
           <div class="absolute top-2 right-2">
-            <span [class]="'px-3 py-1 rounded-lg text-xs font-medium border-2 ' + getStatusClass(item)">
+            <span
+              [class]="'px-3 py-1 rounded-lg text-xs font-medium border-2 ' + getStatusClass(item)"
+            >
               {{ getStockStatus(item) }}
             </span>
           </div>
@@ -109,30 +150,40 @@
         <!-- Item Details -->
         <div class="p-4">
           <div class="text-xs text-gray-500 mb-1">{{ item.item_id }}</div>
-          <h3 class="font-bold text-gray-900 mb-2 line-clamp-2">{{ item.item_name }}</h3>
+          <h3 class="font-bold text-gray-900 mb-2 line-clamp-2">
+            {{ item.item_name }}
+          </h3>
           <div class="text-sm text-gray-600 mb-3">{{ item.category }}</div>
-          
+
           <div class="flex items-center justify-between mb-3">
             <div>
               <div class="text-xs text-gray-500">Stock</div>
-              <div class="font-bold text-gray-900">{{ item.quantity_in_stock }}</div>
+              <div class="font-bold text-gray-900">
+                {{ item.quantity_in_stock }}
+              </div>
             </div>
             <div class="text-right">
               <div class="text-xs text-gray-500">Price</div>
-              <div class="font-bold text-gray-900">£{{ item.unit_price.toFixed(2) }}</div>
+              <div class="font-bold text-gray-900">
+                £{{ item.unit_price.toFixed(2) }}
+              </div>
             </div>
           </div>
 
           <!-- Action Buttons -->
-          <div *ngIf="isAdmin()" class="flex gap-2 pt-3 border-t border-gray-200" (click)="$event.stopPropagation()">
-            <button 
-              (click)="openEditModal(item)" 
+          <div
+            *ngIf="isAdmin()"
+            class="flex gap-2 pt-3 border-t border-gray-200"
+            (click)="$event.stopPropagation()"
+          >
+            <button
+              (click)="openEditModal(item)"
               class="flex-1 px-3 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors text-sm font-medium"
             >
               Edit
             </button>
-            <button 
-              (click)="openDeleteModal(item)" 
+            <button
+              (click)="openDeleteModal(item)"
               class="flex-1 px-3 py-2 bg-red-50 text-red-700 rounded-lg hover:bg-red-100 transition-colors text-sm font-medium"
             >
               Delete
@@ -143,9 +194,22 @@
     </div>
 
     <!-- Empty State -->
-    <div *ngIf="!isLoading && filteredItems.length === 0" class="text-center py-12">
-      <svg class="w-24 h-24 text-gray-400 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"/>
+    <div
+      *ngIf="!isLoading && filteredItems.length === 0"
+      class="text-center py-12"
+    >
+      <svg
+        class="w-24 h-24 text-gray-400 mx-auto mb-4"
+        fill="none"
+        stroke="currentColor"
+        viewBox="0 0 24 24"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"
+        />
       </svg>
       <h3 class="text-xl font-bold text-gray-900 mb-2">No items found</h3>
       <p class="text-gray-600">Try adjusting your filters or add a new item.</p>
@@ -153,13 +217,37 @@
   </main>
 
   <!-- Add/Edit Modal -->
-  <div *ngIf="showItemModal" class="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-6" (click)="closeItemModal()">
-    <div class="bg-white rounded-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto" (click)="$event.stopPropagation()">
-      <div class="sticky top-0 bg-white border-b-2 border-gray-200 px-8 py-6 flex items-center justify-between">
-        <h2 class="text-2xl font-bold text-gray-900">{{ editingItem ? 'Edit Item' : 'Add New Item' }}</h2>
-        <button (click)="closeItemModal()" class="text-gray-500 hover:text-gray-900">
-          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+  <div
+    *ngIf="showItemModal"
+    class="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-6"
+    (click)="closeItemModal()"
+  >
+    <div
+      class="bg-white rounded-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto"
+      (click)="$event.stopPropagation()"
+    >
+      <div
+        class="sticky top-0 bg-white border-b-2 border-gray-200 px-8 py-6 flex items-center justify-between"
+      >
+        <h2 class="text-2xl font-bold text-gray-900">
+          {{ editingItem ? 'Edit Item' : 'Add New Item' }}
+        </h2>
+        <button
+          (click)="closeItemModal()"
+          class="text-gray-500 hover:text-gray-900"
+        >
+          <svg
+            class="w-6 h-6"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M6 18L18 6M6 6l12 12"
+            />
           </svg>
         </button>
       </div>
@@ -167,10 +255,12 @@
       <form (ngSubmit)="saveItem()" class="p-8 space-y-6">
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div>
-            <label class="block text-sm font-medium text-gray-700 mb-2">Item ID</label>
-            <input 
-              type="text" 
-              [(ngModel)]="itemForm.item_id" 
+            <label class="block text-sm font-medium text-gray-700 mb-2"
+              >Item ID</label
+            >
+            <input
+              type="text"
+              [(ngModel)]="itemForm.item_id"
               name="item_id"
               required
               class="w-full px-4 py-2 border-2 border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-gray-900"
@@ -178,10 +268,12 @@
           </div>
 
           <div>
-            <label class="block text-sm font-medium text-gray-700 mb-2">Item Name</label>
-            <input 
-              type="text" 
-              [(ngModel)]="itemForm.item_name" 
+            <label class="block text-sm font-medium text-gray-700 mb-2"
+              >Item Name</label
+            >
+            <input
+              type="text"
+              [(ngModel)]="itemForm.item_name"
               name="item_name"
               required
               class="w-full px-4 py-2 border-2 border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-gray-900"
@@ -189,22 +281,28 @@
           </div>
 
           <div>
-            <label class="block text-sm font-medium text-gray-700 mb-2">Category</label>
-            <select 
-              [(ngModel)]="itemForm.category" 
+            <label class="block text-sm font-medium text-gray-700 mb-2"
+              >Category</label
+            >
+            <select
+              [(ngModel)]="itemForm.category"
               name="category"
               required
               class="w-full px-4 py-2 border-2 border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-gray-900"
             >
-              <option *ngFor="let cat of categories" [value]="cat">{{ cat }}</option>
+              <option *ngFor="let cat of categories" [value]="cat">
+                {{ cat }}
+              </option>
             </select>
           </div>
 
           <div>
-            <label class="block text-sm font-medium text-gray-700 mb-2">Supplier ID</label>
-            <input 
-              type="text" 
-              [(ngModel)]="itemForm.supplier_id" 
+            <label class="block text-sm font-medium text-gray-700 mb-2"
+              >Supplier ID</label
+            >
+            <input
+              type="text"
+              [(ngModel)]="itemForm.supplier_id"
               name="supplier_id"
               required
               class="w-full px-4 py-2 border-2 border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-gray-900"
@@ -212,10 +310,12 @@
           </div>
 
           <div>
-            <label class="block text-sm font-medium text-gray-700 mb-2">Quantity in Stock</label>
-            <input 
-              type="number" 
-              [(ngModel)]="itemForm.quantity_in_stock" 
+            <label class="block text-sm font-medium text-gray-700 mb-2"
+              >Quantity in Stock</label
+            >
+            <input
+              type="number"
+              [(ngModel)]="itemForm.quantity_in_stock"
               name="quantity_in_stock"
               required
               min="0"
@@ -224,10 +324,12 @@
           </div>
 
           <div>
-            <label class="block text-sm font-medium text-gray-700 mb-2">Reorder Level</label>
-            <input 
-              type="number" 
-              [(ngModel)]="itemForm.reorder_level" 
+            <label class="block text-sm font-medium text-gray-700 mb-2"
+              >Reorder Level</label
+            >
+            <input
+              type="number"
+              [(ngModel)]="itemForm.reorder_level"
               name="reorder_level"
               required
               min="0"
@@ -236,10 +338,12 @@
           </div>
 
           <div>
-            <label class="block text-sm font-medium text-gray-700 mb-2">Unit Price (£)</label>
-            <input 
-              type="number" 
-              [(ngModel)]="itemForm.unit_price" 
+            <label class="block text-sm font-medium text-gray-700 mb-2"
+              >Unit Price (£)</label
+            >
+            <input
+              type="number"
+              [(ngModel)]="itemForm.unit_price"
               name="unit_price"
               required
               min="0"
@@ -249,10 +353,12 @@
           </div>
 
           <div>
-            <label class="block text-sm font-medium text-gray-700 mb-2">Weight (kg)</label>
-            <input 
-              type="number" 
-              [(ngModel)]="itemForm.specifications!.weight_kg" 
+            <label class="block text-sm font-medium text-gray-700 mb-2"
+              >Weight (kg)</label
+            >
+            <input
+              type="number"
+              [(ngModel)]="itemForm.specifications!.weight_kg"
               name="weight_kg"
               min="0"
               step="0.01"
@@ -262,15 +368,15 @@
         </div>
 
         <div class="flex gap-4 pt-6 border-t border-gray-200">
-          <button 
-            type="button" 
-            (click)="closeItemModal()" 
+          <button
+            type="button"
+            (click)="closeItemModal()"
             class="flex-1 px-6 py-3 bg-gray-100 text-gray-700 rounded-xl hover:bg-gray-200 transition-colors font-medium"
           >
             Cancel
           </button>
-          <button 
-            type="submit" 
+          <button
+            type="submit"
             class="flex-1 px-6 py-3 bg-gradient-to-r from-gray-900 to-gray-800 text-white rounded-xl hover:from-gray-800 hover:to-gray-700 transition-all font-medium"
           >
             {{ editingItem ? 'Update' : 'Create' }}
@@ -281,27 +387,50 @@
   </div>
 
   <!-- Delete Confirmation Modal -->
-  <div *ngIf="showDeleteModal" class="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-6" (click)="closeDeleteModal()">
-    <div class="bg-white rounded-2xl max-w-md w-full p-8" (click)="$event.stopPropagation()">
+  <div
+    *ngIf="showDeleteModal"
+    class="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-6"
+    (click)="closeDeleteModal()"
+  >
+    <div
+      class="bg-white rounded-2xl max-w-md w-full p-8"
+      (click)="$event.stopPropagation()"
+    >
       <div class="text-center mb-6">
-        <div class="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4">
-          <svg class="w-8 h-8 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+        <div
+          class="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4"
+        >
+          <svg
+            class="w-8 h-8 text-red-600"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
+            />
           </svg>
         </div>
         <h3 class="text-xl font-bold text-gray-900 mb-2">Delete Item</h3>
-        <p class="text-gray-600">Are you sure you want to delete <strong>{{ deletingItem?.item_name }}</strong>? This action cannot be undone.</p>
+        <p class="text-gray-600">
+          Are you sure you want to delete
+          <strong>{{ deletingItem?.item_name }}</strong>? This action cannot be
+          undone.
+        </p>
       </div>
 
       <div class="flex gap-4">
-        <button 
-          (click)="closeDeleteModal()" 
+        <button
+          (click)="closeDeleteModal()"
           class="flex-1 px-6 py-3 bg-gray-100 text-gray-700 rounded-xl hover:bg-gray-200 transition-colors font-medium"
         >
           Cancel
         </button>
-        <button 
-          (click)="confirmDelete()" 
+        <button
+          (click)="confirmDelete()"
           class="flex-1 px-6 py-3 bg-red-600 text-white rounded-xl hover:bg-red-700 transition-colors font-medium"
         >
           Delete
@@ -311,26 +440,61 @@
   </div>
 
   <!-- Detail Sheet -->
-  <div *ngIf="showDetailSheet && viewingItem" class="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-end justify-end" (click)="closeDetailSheet()">
-    <div class="bg-white w-full max-w-lg h-full overflow-y-auto" (click)="$event.stopPropagation()">
-      <div class="sticky top-0 bg-white border-b-2 border-gray-200 px-6 py-4 flex items-center justify-between">
+  <div
+    *ngIf="showDetailSheet && viewingItem"
+    class="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-end justify-end"
+    (click)="closeDetailSheet()"
+  >
+    <div
+      class="bg-white w-full max-w-lg h-full overflow-y-auto"
+      (click)="$event.stopPropagation()"
+    >
+      <div
+        class="sticky top-0 bg-white border-b-2 border-gray-200 px-6 py-4 flex items-center justify-between"
+      >
         <h2 class="text-xl font-bold text-gray-900">Item Details</h2>
-        <button (click)="closeDetailSheet()" class="text-gray-500 hover:text-gray-900">
-          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+        <button
+          (click)="closeDetailSheet()"
+          class="text-gray-500 hover:text-gray-900"
+        >
+          <svg
+            class="w-6 h-6"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M6 18L18 6M6 6l12 12"
+            />
           </svg>
         </button>
       </div>
 
       <div class="p-6 space-y-6">
-        <div *ngIf="viewingItem.photos && viewingItem.photos.length > 0" class="aspect-square bg-gray-100 rounded-xl overflow-hidden">
-          <img [src]="viewingItem.photos[0]" [alt]="viewingItem.item_name" class="w-full h-full object-cover"/>
+        <div
+          *ngIf="viewingItem.photos && viewingItem.photos.length > 0"
+          class="aspect-square bg-gray-100 rounded-xl overflow-hidden"
+        >
+          <img
+            [src]="viewingItem.photos[0]"
+            [alt]="viewingItem.item_name"
+            class="w-full h-full object-cover"
+          />
         </div>
 
         <div>
-          <div class="text-sm text-gray-500 mb-1">{{ viewingItem.item_id }}</div>
-          <h3 class="text-2xl font-bold text-gray-900 mb-2">{{ viewingItem.item_name }}</h3>
-          <span [class]="'inline-block px-3 py-1 rounded-lg text-sm font-medium border-2 ' + getStatusClass(viewingItem)">
+          <div class="text-sm text-gray-500 mb-1">
+            {{ viewingItem.item_id }}
+          </div>
+          <h3 class="text-2xl font-bold text-gray-900 mb-2">
+            {{ viewingItem.item_name }}
+          </h3>
+          <span
+            [class]="'inline-block px-3 py-1 rounded-lg text-sm font-medium border-2 ' + getStatusClass(viewingItem)"
+          >
             {{ getStockStatus(viewingItem) }}
           </span>
         </div>
@@ -338,34 +502,51 @@
         <div class="grid grid-cols-2 gap-4">
           <div class="bg-gray-50 rounded-xl p-4">
             <div class="text-sm text-gray-500 mb-1">Category</div>
-            <div class="font-bold text-gray-900">{{ viewingItem.category }}</div>
+            <div class="font-bold text-gray-900">
+              {{ viewingItem.category }}
+            </div>
           </div>
           <div class="bg-gray-50 rounded-xl p-4">
             <div class="text-sm text-gray-500 mb-1">Supplier</div>
-            <div class="font-bold text-gray-900">{{ viewingItem.supplier_id }}</div>
+            <div class="font-bold text-gray-900">
+              {{ viewingItem.supplier_id }}
+            </div>
           </div>
           <div class="bg-gray-50 rounded-xl p-4">
             <div class="text-sm text-gray-500 mb-1">Stock</div>
-            <div class="font-bold text-gray-900">{{ viewingItem.quantity_in_stock }}</div>
+            <div class="font-bold text-gray-900">
+              {{ viewingItem.quantity_in_stock }}
+            </div>
           </div>
           <div class="bg-gray-50 rounded-xl p-4">
             <div class="text-sm text-gray-500 mb-1">Reorder Level</div>
-            <div class="font-bold text-gray-900">{{ viewingItem.reorder_level }}</div>
+            <div class="font-bold text-gray-900">
+              {{ viewingItem.reorder_level }}
+            </div>
           </div>
           <div class="bg-gray-50 rounded-xl p-4">
             <div class="text-sm text-gray-500 mb-1">Unit Price</div>
-            <div class="font-bold text-gray-900">£{{ viewingItem.unit_price.toFixed(2) }}</div>
+            <div class="font-bold text-gray-900">
+              £{{ viewingItem.unit_price.toFixed(2) }}
+            </div>
           </div>
           <div class="bg-gray-50 rounded-xl p-4">
             <div class="text-sm text-gray-500 mb-1">Weight</div>
-            <div class="font-bold text-gray-900">{{ viewingItem.specifications.weight_kg }} kg</div>
+            <div class="font-bold text-gray-900">
+              {{ viewingItem.specifications.weight_kg }} kg
+            </div>
           </div>
         </div>
 
-        <div *ngIf="viewingItem.specifications.materials && viewingItem.specifications.materials.length > 0">
+        <div
+          *ngIf="viewingItem.specifications.materials && viewingItem.specifications.materials.length > 0"
+        >
           <div class="text-sm font-medium text-gray-700 mb-2">Materials</div>
           <div class="flex flex-wrap gap-2">
-            <span *ngFor="let material of viewingItem.specifications.materials" class="px-3 py-1 bg-gray-100 text-gray-700 rounded-lg text-sm">
+            <span
+              *ngFor="let material of viewingItem.specifications.materials"
+              class="px-3 py-1 bg-gray-100 text-gray-700 rounded-lg text-sm"
+            >
               {{ material }}
             </span>
           </div>
@@ -377,4 +558,47 @@
       </div>
     </div>
   </div>
+  <div class="flex items-center justify-between px-4 py-3 bg-white border-t border-gray-200 sm:px-6 mt-4 rounded-xl shadow-sm">
+  <div class="flex justify-between flex-1 sm:hidden">
+    <button (click)="previousPage()" [disabled]="currentPage === 1" 
+            class="relative inline-flex items-center px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed">
+      Previous
+    </button>
+    <button (click)="nextPage()" [disabled]="!hasNextPage" 
+            class="relative inline-flex items-center px-4 py-2 ml-3 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed">
+      Next
+    </button>
+  </div>
+
+  <div class="hidden sm:flex sm:flex-1 sm:items-center sm:justify-between">
+    <div>
+      <p class="text-sm text-gray-700">
+        Showing Page <span class="font-semibold text-gray-900">{{ currentPage }}</span>
+      </p>
+    </div>
+    <div>
+      <nav class="inline-flex -space-x-px rounded-md shadow-sm" aria-label="Pagination">
+        <button (click)="previousPage()" [disabled]="currentPage === 1" 
+                class="relative inline-flex items-center px-2 py-2 text-gray-400 rounded-l-md ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0 disabled:opacity-50 disabled:cursor-not-allowed transition-colors">
+          <span class="sr-only">Previous</span>
+          <svg class="w-5 h-5" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+            <path fill-rule="evenodd" d="M12.79 5.23a.75.75 0 01-.02 1.06L8.832 10l3.938 3.71a.75.75 0 11-1.04 1.08l-4.5-4.25a.75.75 0 010-1.08l4.5-4.25a.75.75 0 011.06.02z" clip-rule="evenodd" />
+          </svg>
+        </button>
+        
+        <span class="relative inline-flex items-center px-4 py-2 text-sm font-semibold text-gray-900 bg-gray-50 ring-1 ring-inset ring-gray-300 focus:outline-offset-0">
+          {{ currentPage }}
+        </span>
+        
+        <button (click)="nextPage()" [disabled]="!hasNextPage" 
+                class="relative inline-flex items-center px-2 py-2 text-gray-400 rounded-r-md ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0 disabled:opacity-50 disabled:cursor-not-allowed transition-colors">
+          <span class="sr-only">Next</span>
+          <svg class="w-5 h-5" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+            <path fill-rule="evenodd" d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z" clip-rule="evenodd" />
+          </svg>
+        </button>
+      </nav>
+    </div>
+  </div>
+</div>
 </div>

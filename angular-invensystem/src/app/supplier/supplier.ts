@@ -235,4 +235,48 @@ export class SupplierComponent implements OnInit {
       performance_reviews: this.supplierForm.performance_reviews || []
     };
   }
+
+  // Pagination variables
+  currentPage = 1;
+  pageSize = 10;
+  hasNextPage = true; // Tracks if we should disable the 'Next' button
+
+  // ... constructor and ngOnInit ...
+
+  loadItems(): void {
+    this.isLoading = true;
+    this.error = null;
+
+    // Pass the pagination variables to the service
+    this.supplierService.getAll(this.currentPage, this.pageSize).subscribe({
+      next: (data) => {
+        this.suppliers = data;
+        
+        // If the backend returns fewer items than the page size, we are on the last page!
+        this.hasNextPage = data.length === this.pageSize; 
+        
+        this.filterSuppliers();
+        this.isLoading = false;
+      },
+      error: (err) => {
+        this.error = err.message;
+        this.isLoading = false;
+      }
+    });
+  }
+
+  // Add these two new methods to handle button clicks
+  nextPage(): void {
+    if (this.hasNextPage) {
+      this.currentPage++;
+      this.loadItems(); // Fetch the next page
+    }
+  }
+
+  previousPage(): void {
+    if (this.currentPage > 1) {
+      this.currentPage--;
+      this.loadItems(); // Fetch the previous page
+    }
+  }
 }

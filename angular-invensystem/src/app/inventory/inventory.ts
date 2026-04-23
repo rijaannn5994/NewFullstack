@@ -43,6 +43,12 @@ export class InventoryComponent implements OnInit {
     private router: Router
   ) {}
 
+  
+  inventory_list: InventoryItem[] = [];
+
+  page: number = 1;
+  inventoryData = { pageSize: 10 };
+
   ngOnInit(): void {
     this.authService.userRole$.subscribe(role => {
       this.userRole = role;
@@ -57,23 +63,6 @@ export class InventoryComponent implements OnInit {
     });
 
     this.loadItems();
-  }
-
-  loadItems(): void {
-    this.isLoading = true;
-    this.error = null;
-
-    this.inventoryService.getAll().subscribe({
-      next: (data) => {
-        this.items = data;
-        this.filterItems();
-        this.isLoading = false;
-      },
-      error: (err) => {
-        this.error = err.message;
-        this.isLoading = false;
-      }
-    });
   }
 
   onSearch(): void {
@@ -251,4 +240,48 @@ export class InventoryComponent implements OnInit {
       photos: this.itemForm.photos || []
     };
   }
+  
+  currentPage = 1;
+  pageSize = 10;
+  hasNextPage = true; 
+
+  // ... constructor and ngOnInit ...
+  loadItems(): void {
+    this.isLoading = true;
+    this.error = null;
+
+    // Pass the pagination variables to the service
+    this.inventoryService.getAll(this.currentPage, this.pageSize).subscribe({
+      next: (data) => {
+        this.items = data;
+        
+        // If the backend returns fewer items than the page size, we are on the last page!
+        this.hasNextPage = data.length === this.pageSize; 
+        
+        this.filterItems();
+        this.isLoading = false;
+      },
+      error: (err) => {
+        this.error = err.message;
+        this.isLoading = false;
+      }
+    });
+  }
+
+  // Add these two new methods to handle button clicks
+  nextPage(): void {
+    if (this.hasNextPage) {
+      this.currentPage++;
+      this.loadItems(); // Fetch the next page
+    }
+  }
+
+  previousPage(): void {
+    if (this.currentPage > 1) {
+      this.currentPage--;
+      this.loadItems(); // Fetch the previous page
+    }
+  }  
 }
+
+
