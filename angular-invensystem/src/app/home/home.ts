@@ -12,6 +12,7 @@ import { AuthService } from '../auth.service';
   styleUrls: ['./home.css']
 })
 export class HomeComponent implements OnInit {
+  // Component state and contact form variables
   isAuthenticated = false;
   username: string | null = null;
   userRole: 'Admin' | 'Staff' | null = null;
@@ -33,6 +34,7 @@ export class HomeComponent implements OnInit {
     private router: Router
   ) {}
 
+  // Listens for user authentication changes when the page loads
   ngOnInit(): void {
     this.authService.isAuthenticated$.subscribe(auth => {
       this.isAuthenticated = auth;
@@ -45,6 +47,7 @@ export class HomeComponent implements OnInit {
     });
   }
 
+  // Routing methods to handle user navigation based on auth status
   onGetStarted(): void {
     if (this.isAuthenticated) {
       this.router.navigate(['/inventory']);
@@ -63,6 +66,7 @@ export class HomeComponent implements OnInit {
     });
   }
 
+  // UI helpers for toggling modals and handling the contact form submission
   openAbout(): void {
     this.showAboutModal = true;
   }

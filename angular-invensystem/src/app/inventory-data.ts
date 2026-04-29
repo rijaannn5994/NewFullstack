@@ -1,7 +1,6 @@
 import { Injectable } from "@angular/core";
 import { HttpClient, HttpParams } from "@angular/common/http";
 import { Observable, of } from "rxjs";
-import { catchError } from "rxjs/operators";
 
 export interface InventoryItem {
   _id: string;
@@ -29,8 +28,7 @@ export interface InventoryItem {
   providedIn: "root",
 })
 export class InventoryDataService {
-  // Ensure the port matches your Flask app (5000 or 5001 as previously discussed)
-  private apiUrl = "http://localhost:5001/api/inventory";
+  private apiUrl = 'http://localhost:5001/api/inventory';
   pageSize: number = 5;
 
   constructor(private http: HttpClient) {}
@@ -45,34 +43,47 @@ export class InventoryDataService {
       .set("ps", pageSize.toString());
 
     if (search) {
-      params = params.set("search", search); // Add search param if it exists
+      params = params.set("search", search); 
     }
 
-    return this.http.get<InventoryItem[]>(this.apiUrl, { params });
+    return this.http.get<InventoryItem[]>(this.apiUrl, { 
+      params,
+      withCredentials: true 
+    });
   }
 
   getById(id: string): Observable<InventoryItem> {
-    return this.http.get<InventoryItem>(`${this.apiUrl}/${id}`);
+    return this.http.get<InventoryItem>(`${this.apiUrl}/${id}`, {
+      withCredentials: true
+    });
   }
 
   create(item: Omit<InventoryItem, "_id">): Observable<InventoryItem> {
-    return this.http.post<InventoryItem>(this.apiUrl, item);
+    return this.http.post<InventoryItem>(this.apiUrl, item, {
+      withCredentials: true
+    });
   }
 
   update(
     id: string,
     item: Omit<InventoryItem, "_id">,
   ): Observable<InventoryItem> {
-    return this.http.put<InventoryItem>(`${this.apiUrl}/${id}`, item);
+    return this.http.put<InventoryItem>(`${this.apiUrl}/${id}`, item, {
+      withCredentials: true
+    });
   }
 
   delete(id: string): Observable<void> {
-    return this.http.delete<void>(`${this.apiUrl}/${id}`);
+    return this.http.delete<void>(`${this.apiUrl}/${id}`, {
+      withCredentials: true
+    });
   }
 
   uploadPhoto(id: string, file: File): Observable<any> {
     const formData = new FormData();
     formData.append("photo", file);
-    return this.http.post(`${this.apiUrl}/${id}/photos`, formData);
+    return this.http.post(`${this.apiUrl}/${id}/photos`, formData, {
+      withCredentials: true
+    });
   }
 }

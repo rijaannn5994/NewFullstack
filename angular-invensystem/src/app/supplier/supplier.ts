@@ -14,6 +14,8 @@ import { NavigationComponent } from '../navigation/navigation';
   styleUrls: ['./supplier.css']
 })
 export class SupplierComponent implements OnInit {
+  
+  // State, Form, and UI variables
   suppliers: Supplier[] = [];
   filteredSuppliers: Supplier[] = [];
   searchTerm = '';
@@ -22,17 +24,16 @@ export class SupplierComponent implements OnInit {
   username: string | null = null;
   isLoading = true;
   error: string | null = null;
-
-  // Modal state
   showSupplierModal = false;
   showDeleteModal = false;
   showDetailSheet = false;
   editingSupplier: Supplier | null = null;
   deletingSupplier: Supplier | null = null;
   viewingSupplier: Supplier | null = null;
-
-  // Form data
   supplierForm: Partial<Supplier> = this.getEmptyForm();
+  currentPage = 1;
+  pageSize = 12;
+  hasNextPage = true;
 
   constructor(
     private supplierService: SupplierDataService,
@@ -40,6 +41,7 @@ export class SupplierComponent implements OnInit {
     private router: Router
   ) {}
 
+  // Initialization & Auth check
   ngOnInit(): void {
     this.authService.userRole$.subscribe(role => {
       this.userRole = role;
@@ -56,23 +58,7 @@ export class SupplierComponent implements OnInit {
     this.loadSuppliers();
   }
 
-  loadSuppliers(): void {
-    this.isLoading = true;
-    this.error = null;
-
-    this.supplierService.getAll().subscribe({
-      next: (data) => {
-        this.suppliers = data;
-        this.filterSuppliers();
-        this.isLoading = false;
-      },
-      error: (err) => {
-        this.error = err.message;
-        this.isLoading = false;
-      }
-    });
-  }
-
+  // Search, Filter, and Sort logic
   onSearch(): void {
     this.currentPage = 1;
     this.filterSuppliers();
@@ -83,25 +69,25 @@ export class SupplierComponent implements OnInit {
   }
 
   filterSuppliers(): void {
-  let filtered = [...this.suppliers];
+    let filtered = [...this.suppliers];
 
-  //Sort logic
-  filtered.sort((a, b) => {
-    const aVal = a[this.sortBy as keyof Supplier];
-    const bVal = b[this.sortBy as keyof Supplier];
-    
-    if (typeof aVal === 'string' && typeof bVal === 'string') {
-      return aVal.localeCompare(bVal);
-    }
-    if (typeof aVal === 'number' && typeof bVal === 'number') {
-      return bVal - aVal; // Descending for reliability score
-    }
-    return 0;
-  });
+    filtered.sort((a, b) => {
+      const aVal = a[this.sortBy as keyof Supplier];
+      const bVal = b[this.sortBy as keyof Supplier];
+      
+      if (typeof aVal === 'string' && typeof bVal === 'string') {
+        return aVal.localeCompare(bVal);
+      }
+      if (typeof aVal === 'number' && typeof bVal === 'number') {
+        return bVal - aVal; 
+      }
+      return 0;
+    });
 
-  this.filteredSuppliers = filtered;
-}
+    this.filteredSuppliers = filtered;
+  }
 
+  // UI Helpers
   getReliabilityClass(score: number): string {
     if (score >= 90) return 'bg-green-100 text-green-800 border-green-200';
     if (score >= 75) return 'bg-yellow-100 text-yellow-800 border-yellow-200';
@@ -116,7 +102,11 @@ export class SupplierComponent implements OnInit {
     return sum / supplier.performance_reviews.length;
   }
 
-  // CRUD Operations
+  isAdmin(): boolean {
+    return this.userRole === 'Admin';
+  }
+
+  // Modal Toggles
   openAddModal(): void {
     this.editingSupplier = null;
     this.supplierForm = this.getEmptyForm();
@@ -135,6 +125,27 @@ export class SupplierComponent implements OnInit {
     this.supplierForm = this.getEmptyForm();
   }
 
+  openDeleteModal(supplier: Supplier): void {
+    this.deletingSupplier = supplier;
+    this.showDeleteModal = true;
+  }
+
+  closeDeleteModal(): void {
+    this.showDeleteModal = false;
+    this.deletingSupplier = null;
+  }
+
+  openDetailSheet(supplier: Supplier): void {
+    this.viewingSupplier = supplier;
+    this.showDetailSheet = true;
+  }
+
+  closeDetailSheet(): void {
+    this.showDetailSheet = false;
+    this.viewingSupplier = null;
+  }
+
+  // CRUD Operations & Data Fetching
   saveSupplier(): void {
     const supplierData = this.prepareSupplierData();
 
@@ -161,19 +172,8 @@ export class SupplierComponent implements OnInit {
     }
   }
 
-  openDeleteModal(supplier: Supplier): void {
-    this.deletingSupplier = supplier;
-    this.showDeleteModal = true;
-  }
-
-  closeDeleteModal(): void {
-    this.showDeleteModal = false;
-    this.deletingSupplier = null;
-  }
-
   confirmDelete(): void {
     if (this.deletingSupplier) {
-      // CHANGED: Use supplier_id instead of _id
       this.supplierService.delete(this.deletingSupplier.supplier_id).subscribe({
         next: () => {
           this.loadSuppliers();
@@ -186,20 +186,57 @@ export class SupplierComponent implements OnInit {
     }
   }
 
-  openDetailSheet(supplier: Supplier): void {
-    this.viewingSupplier = supplier;
-    this.showDetailSheet = true;
+  loadSuppliers(): void {
+    this.isLoading = true;
+    this.error = null;
+
+    this.supplierService.getAll().subscribe({
+      next: (data) => {
+        this.suppliers = data;
+        this.filterSuppliers();
+        this.isLoading = false;
+      },
+      error: (err) => {
+        this.error = err.message;
+        this.isLoading = false;
+      }
+    });
   }
 
-  closeDetailSheet(): void {
-    this.showDetailSheet = false;
-    this.viewingSupplier = null;
+  loadItems(): void {
+    this.isLoading = true;
+    this.error = null;
+
+    this.supplierService.getAll(this.currentPage, this.pageSize, this.searchTerm).subscribe({
+      next: (data) => {
+        this.suppliers = data;
+        this.hasNextPage = data.length === this.pageSize;
+        this.filterSuppliers(); 
+        this.isLoading = false;
+      },
+      error: (err) => {
+        this.error = err.message;
+        this.isLoading = false;
+      }
+    });
   }
 
-  isAdmin(): boolean {
-    return this.userRole === 'Admin';
+  // Pagination logic
+  nextPage(): void {
+    if (this.hasNextPage) {
+      this.currentPage++;
+      this.loadItems(); 
+    }
   }
 
+  previousPage(): void {
+    if (this.currentPage > 1) {
+      this.currentPage--;
+      this.loadItems(); 
+    }
+  }
+
+  // Data Preparation Helpers
   private getEmptyForm(): Partial<Supplier> {
     return {
       supplier_id: '',
@@ -227,45 +264,5 @@ export class SupplierComponent implements OnInit {
       address: this.supplierForm.address!,
       performance_reviews: this.supplierForm.performance_reviews || []
     };
-  }
-
-  // Pagination variables
-  currentPage = 1;
-  pageSize = 12;
-  hasNextPage = true; // Tracks if we should disable the 'Next' button
-
-  // ... constructor and ngOnInit ...
-
-  loadItems(): void {
-    this.isLoading = true;
-  this.error = null;
-
-  this.supplierService.getAll(this.currentPage, this.pageSize, this.searchTerm).subscribe({
-    next: (data) => {
-      this.suppliers = data;
-      this.hasNextPage = data.length === this.pageSize;
-      this.filterSuppliers(); 
-      this.isLoading = false;
-    },
-    error: (err) => {
-      this.error = err.message;
-      this.isLoading = false;
-    }
-  });
-  }
-
-  // Add these two new methods to handle button clicks
-  nextPage(): void {
-    if (this.hasNextPage) {
-      this.currentPage++;
-      this.loadItems(); // Fetch the next page
-    }
-  }
-
-  previousPage(): void {
-    if (this.currentPage > 1) {
-      this.currentPage--;
-      this.loadItems(); // Fetch the previous page
-    }
   }
 }

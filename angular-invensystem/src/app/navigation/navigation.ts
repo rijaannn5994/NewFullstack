@@ -11,9 +11,10 @@ import { AuthService } from '../auth.service';
   styleUrls: ['./navigation.css']
 })
 export class NavigationComponent implements OnInit {
+  
+  // Component Inputs/Outputs and State
   @Input() currentPage: 'home' | 'inventory' | 'supplier' = 'home';
   @Output() logout = new EventEmitter<void>();
-
   username: string | null = null;
   userRole: 'Admin' | 'Staff' | null = null;
   isAuthenticated = false;
@@ -23,6 +24,7 @@ export class NavigationComponent implements OnInit {
     public router: Router
   ) {}
 
+  // Initialization & Auth state subscriptions
   ngOnInit(): void {
     this.authService.isAuthenticated$.subscribe(auth => {
       this.isAuthenticated = auth;
@@ -35,6 +37,7 @@ export class NavigationComponent implements OnInit {
     });
   }
 
+  // Navigation Routing
   navigateHome(): void {
     this.router.navigate(['/home']);
   }
@@ -47,6 +50,7 @@ export class NavigationComponent implements OnInit {
     this.router.navigate(['/supplier']);
   }
 
+  // Logout logic
   onLogout(): void {
     this.authService.logout().subscribe(() => {
       this.logout.emit();
@@ -54,6 +58,7 @@ export class NavigationComponent implements OnInit {
     });
   }
 
+  // UI Active state checker
   isActive(page: string): boolean {
     return this.currentPage === page;
   }

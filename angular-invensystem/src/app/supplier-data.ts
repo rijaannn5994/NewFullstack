@@ -1,7 +1,6 @@
 import { Injectable } from "@angular/core";
 import { HttpClient, HttpParams } from "@angular/common/http";
 import { Observable, of } from "rxjs";
-import { catchError } from "rxjs/operators";
 
 export interface Supplier {
   _id: string;
@@ -27,11 +26,9 @@ export interface Supplier {
   providedIn: "root",
 })
 export class SupplierDataService {
-  private apiUrl = "http://localhost:5001/api/suppliers";
-
+  private apiUrl = "/api/suppliers";
   constructor(private http: HttpClient) {}
 
-  // Update this method
   getAll(
     page: number = 1,
     pageSize: number = 12,
@@ -45,29 +42,42 @@ export class SupplierDataService {
       params = params.set("search", search);
     }
 
-    return this.http.get<Supplier[]>(this.apiUrl, { params });
+    return this.http.get<Supplier[]>(this.apiUrl, { 
+      params,
+      withCredentials: true 
+    });
   }
 
   getById(id: string): Observable<Supplier> {
-    return this.http.get<Supplier>(`${this.apiUrl}/${id}`);
+    return this.http.get<Supplier>(`${this.apiUrl}/${id}`, {
+      withCredentials: true
+    });
   }
 
   create(supplier: Omit<Supplier, "_id">): Observable<Supplier> {
-    return this.http.post<Supplier>(this.apiUrl, supplier);
+    return this.http.post<Supplier>(this.apiUrl, supplier, {
+      withCredentials: true
+    });
   }
 
   update(id: string, supplier: Omit<Supplier, "_id">): Observable<Supplier> {
-    return this.http.put<Supplier>(`${this.apiUrl}/${id}`, supplier);
+    return this.http.put<Supplier>(`${this.apiUrl}/${id}`, supplier, {
+      withCredentials: true
+    });
   }
 
   delete(id: string): Observable<void> {
-    return this.http.delete<void>(`${this.apiUrl}/${id}`);
+    return this.http.delete<void>(`${this.apiUrl}/${id}`, {
+      withCredentials: true
+    });
   }
 
   addReview(
     id: string,
     review: { date: string; rating: number; comment: string },
   ): Observable<any> {
-    return this.http.post(`${this.apiUrl}/${id}/reviews`, review);
+    return this.http.post(`${this.apiUrl}/${id}/reviews`, review, {
+      withCredentials: true
+    });
   }
 }
