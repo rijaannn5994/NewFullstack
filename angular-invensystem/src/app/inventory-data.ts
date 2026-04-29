@@ -28,7 +28,7 @@ export interface InventoryItem {
   providedIn: "root",
 })
 export class InventoryDataService {
-  private apiUrl = 'http://localhost:5001/api/inventory';
+  private apiUrl = "/api/inventory";
   pageSize: number = 5;
 
   constructor(private http: HttpClient) {}
@@ -43,24 +43,24 @@ export class InventoryDataService {
       .set("ps", pageSize.toString());
 
     if (search) {
-      params = params.set("search", search); 
+      params = params.set("search", search);
     }
 
-    return this.http.get<InventoryItem[]>(this.apiUrl, { 
+    return this.http.get<InventoryItem[]>(this.apiUrl, {
       params,
-      withCredentials: true 
+      withCredentials: true,
     });
   }
 
   getById(id: string): Observable<InventoryItem> {
     return this.http.get<InventoryItem>(`${this.apiUrl}/${id}`, {
-      withCredentials: true
+      withCredentials: true,
     });
   }
 
   create(item: Omit<InventoryItem, "_id">): Observable<InventoryItem> {
     return this.http.post<InventoryItem>(this.apiUrl, item, {
-      withCredentials: true
+      withCredentials: true,
     });
   }
 
@@ -69,13 +69,13 @@ export class InventoryDataService {
     item: Omit<InventoryItem, "_id">,
   ): Observable<InventoryItem> {
     return this.http.put<InventoryItem>(`${this.apiUrl}/${id}`, item, {
-      withCredentials: true
+      withCredentials: true,
     });
   }
 
   delete(id: string): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/${id}`, {
-      withCredentials: true
+      withCredentials: true,
     });
   }
 
@@ -83,7 +83,7 @@ export class InventoryDataService {
     const formData = new FormData();
     formData.append("photo", file);
     return this.http.post(`${this.apiUrl}/${id}/photos`, formData, {
-      withCredentials: true
+      withCredentials: true,
     });
   }
 }

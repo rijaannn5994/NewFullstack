@@ -26,10 +26,26 @@ export class AuthService {
     this.checkExistingSession();
   }
 
+  // --- Cookie Helpers ---
+  private setCookie(name: string, value: string, days: number = 7): void {
+    const expires = new Date(Date.now() + days * 864e5).toUTCString();
+    document.cookie = `${name}=${encodeURIComponent(value)}; expires=${expires}; path=/; SameSite=Strict`;
+  }
+
+  private getCookie(name: string): string | null {
+    const match = document.cookie.match(new RegExp('(?:^|; )' + name + '=([^;]*)'));
+    return match ? decodeURIComponent(match[1]) : null;
+  }
+
+  private deleteCookie(name: string): void {
+    document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
+  }
+
+  // --- Session ---
   private checkExistingSession(): void {
-    const token = localStorage.getItem('authToken');
-    const role = localStorage.getItem('userRole') as 'Admin' | 'Staff' | null;
-    const username = localStorage.getItem('username');
+    const token = this.getCookie('authToken');
+    const role = this.getCookie('userRole') as 'Admin' | 'Staff' | null;
+    const username = this.getCookie('username');
 
     if (token && role && username) {
       this.isAuthenticatedSubject.next(true);
@@ -41,74 +57,54 @@ export class AuthService {
   login(username: string, password: string): Observable<AuthResponse> {
     return this.http.post<AuthResponse>(`${this.apiUrl}/auth/login`, { username, password })
       .pipe(
-        tap(response => {
-          localStorage.setItem('authToken', response.token);
-          localStorage.setItem('userRole', response.role);
-          localStorage.setItem('username', response.username);
-          this.isAuthenticatedSubject.next(true);
-          this.userRoleSubject.next(response.role);
-          this.usernameSubject.next(response.username);
-        }),
+        tap(response => this.saveSession(response)),
         catchError(error => {
-          // Fallback mock authentication
           if (username === 'admin' && password === 'admin') {
-            const mockResponse: AuthResponse = {
-              token: 'mock-admin-token',
-              role: 'Admin',
-              username: 'admin'
-            };
-            localStorage.setItem('authToken', mockResponse.token);
-            localStorage.setItem('userRole', mockResponse.role);
-            localStorage.setItem('username', mockResponse.username);
-            this.isAuthenticatedSubject.next(true);
-            this.userRoleSubject.next(mockResponse.role);
-            this.usernameSubject.next(mockResponse.username);
-            return of(mockResponse);
+            const mock: AuthResponse = { token: 'mock-admin-token', role: 'Admin', username: 'admin' };
+            this.saveSession(mock);
+            return of(mock);
           } else if (username === 'staff' && password === 'staff') {
-            const mockResponse: AuthResponse = {
-              token: 'mock-staff-token',
-              role: 'Staff',
-              username: 'staff'
-            };
-            localStorage.setItem('authToken', mockResponse.token);
-            localStorage.setItem('userRole', mockResponse.role);
-            localStorage.setItem('username', mockResponse.username);
-            this.isAuthenticatedSubject.next(true);
-            this.userRoleSubject.next(mockResponse.role);
-            this.usernameSubject.next(mockResponse.username);
-            return of(mockResponse);
+            const mock: AuthResponse = { token: 'mock-staff-token', role: 'Staff', username: 'staff' };
+            this.saveSession(mock);
+            return of(mock);
           }
           throw error;
         })
       );
   }
 
+  private saveSession(response: AuthResponse): void {
+    this.setCookie('authToken', response.token);
+    this.setCookie('userRole', response.role);
+    this.setCookie('username', response.username);
+    this.isAuthenticatedSubject.next(true);
+    this.userRoleSubject.next(response.role);
+    this.usernameSubject.next(response.username);
+  }
+
   logout(): Observable<any> {
     return this.http.post(`${this.apiUrl}/auth/logout`, {})
       .pipe(
         tap(() => this.clearSession()),
-        catchError(() => {
-          this.clearSession();
-          return of(null);
-        })
+        catchError(() => { this.clearSession(); return of(null); })
       );
   }
 
   private clearSession(): void {
-    localStorage.removeItem('authToken');
-    localStorage.removeItem('userRole');
-    localStorage.removeItem('username');
+    this.deleteCookie('authToken');
+    this.deleteCookie('userRole');
+    this.deleteCookie('username');
     this.isAuthenticatedSubject.next(false);
     this.userRoleSubject.next(null);
     this.usernameSubject.next(null);
   }
 
   getToken(): string | null {
-    return localStorage.getItem('authToken');
+    return this.getCookie('authToken');
   }
 
   getRole(): 'Admin' | 'Staff' | null {
-    return localStorage.getItem('userRole') as 'Admin' | 'Staff' | null;
+    return this.getCookie('userRole') as 'Admin' | 'Staff' | null;
   }
 
   isAdmin(): boolean {
