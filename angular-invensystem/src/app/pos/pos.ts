@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { AuthService } from '../auth.service';
 import { NavigationComponent } from '../navigation/navigation';
 import { InventoryDataService, InventoryItem } from '../inventory-data';
+import { WebService } from '../web-services'; // <-- ADD THIS IMPORT
 
 export interface CartItem {
   item: InventoryItem;
@@ -19,6 +20,11 @@ export interface CartItem {
   styleUrls: ['./pos.css']
 })
 export class PosComponent implements OnInit {
+  // View State 
+  viewMode: 'pos' | 'history' = 'pos'; // Tracks which screen we're on
+  salesHistory: any[] = [];
+  isLoadingHistory = false;
+
   // All items for the grid
   allItems: InventoryItem[] = [];
   filteredItems: InventoryItem[] = [];
@@ -33,7 +39,6 @@ export class PosComponent implements OnInit {
   // Cart
   cart: CartItem[] = [];
 
-  // UI state
   isProcessing = false;
   showBill = false;
   currentSale: any = null;
@@ -46,7 +51,8 @@ export class PosComponent implements OnInit {
   constructor(
     private inventoryService: InventoryDataService,
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private webService: WebService // <-- INJECT WebService
   ) {}
 
   ngOnInit(): void {
@@ -56,6 +62,27 @@ export class PosComponent implements OnInit {
       if (!auth) this.router.navigate(['/login']);
     });
     this.loadAllItems();
+  }
+
+  // View Toggles
+  switchToHistory(): void {
+    this.viewMode = 'history';
+    this.isLoadingHistory = true;
+    this.webService.get<any[]>('/api/sales').subscribe({
+      next: (sales) => {
+        this.salesHistory = sales;
+        this.isLoadingHistory = false;
+      },
+      error: () => {
+        this.isLoadingHistory = false;
+        this.error = "Failed to load sales history.";
+      }
+    });
+  }
+
+  switchToPos(): void {
+    this.viewMode = 'pos';
+    this.loadAllItems(); // Refresh inventory items when switching back
   }
 
   loadAllItems(): void {
@@ -94,7 +121,7 @@ export class PosComponent implements OnInit {
 
   onCategoryChange(): void { this.applyFilter(); }
 
-  // --- Cart ---
+  //  Cart 
   addToCart(item: InventoryItem): void {
     if (item.quantity_in_stock === 0) return;
     const existing = this.cart.find(c => c.item.item_id === item.item_id);
@@ -129,19 +156,10 @@ export class PosComponent implements OnInit {
   }
 
   clearCart(): void { this.cart = []; }
+  isInCart(itemId: string): boolean { return this.cart.some(c => c.item.item_id === itemId); }
+  getCartQty(itemId: string): number { return this.cart.find(c => c.item.item_id === itemId)?.quantity ?? 0; }
 
-  isInCart(itemId: string): boolean {
-    return this.cart.some(c => c.item.item_id === itemId);
-  }
-
-  getCartQty(itemId: string): number {
-    return this.cart.find(c => c.item.item_id === itemId)?.quantity ?? 0;
-  }
-
-  // --- Totals ---
-  get subtotal(): number {
-    return this.cart.reduce((sum, c) => sum + c.item.unit_price * c.quantity, 0);
-  }
+  get subtotal(): number { return this.cart.reduce((sum, c) => sum + c.item.unit_price * c.quantity, 0); }
   get vatAmount(): number { return this.subtotal * this.VAT_RATE; }
   get total(): number { return this.subtotal + this.vatAmount; }
   get totalItems(): number { return this.cart.reduce((sum, c) => sum + c.quantity, 0); }
@@ -196,31 +214,39 @@ export class PosComponent implements OnInit {
       vat: this.vatAmount,
       total: this.total,
     };
-    this.isProcessing = false;
-    this.showBill = true;
+    
+    // Save the sale to the backend 
+    this.webService.post('/api/sales', this.currentSale).subscribe({
+      next: () => {
+        this.isProcessing = false;
+        this.showBill = true;
+      },
+      error: () => {
+        this.error = 'Inventory updated, but failed to record the sale history.';
+        this.isProcessing = false;
+        this.showBill = true; // Show it anyway so they can print it
+      }
+    });
   }
 
+  // (Keep closeBill, printBill, getPhotoUrl, getStockClass, getStockLabel exactly the same)
   closeBill(): void {
     this.showBill = false;
     this.cart = [];
     this.currentSale = null;
     this.loadAllItems();
   }
-
   printBill(): void { window.print(); }
-
   getPhotoUrl(photoPath: string | undefined): string {
     if (!photoPath) return '';
     if (photoPath.startsWith('data:image')) return photoPath;
     return `http://localhost:5001${photoPath}`;
   }
-
   getStockClass(item: InventoryItem): string {
     if (item.quantity_in_stock === 0) return 'bg-red-100 text-red-700 border-red-200';
     if (item.quantity_in_stock <= item.reorder_level) return 'bg-amber-100 text-amber-700 border-amber-200';
     return 'bg-emerald-100 text-emerald-700 border-emerald-200';
   }
-
   getStockLabel(item: InventoryItem): string {
     if (item.quantity_in_stock === 0) return 'Out of Stock';
     if (item.quantity_in_stock <= item.reorder_level) return 'Low Stock';

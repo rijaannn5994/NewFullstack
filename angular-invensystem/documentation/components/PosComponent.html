@@ -1,0 +1,2943 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>invensystem documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css">
+    </head>
+    <body>
+          <script>
+               // Blocking script to avoid flickering dark mode
+               // Dark mode toggle button
+               var useDark = window.matchMedia('(prefers-color-scheme: dark)');
+               var darkModeState = useDark.matches;
+               var $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var $darkModeToggles = document.querySelectorAll('.dark-mode-switch');
+               var darkModeStateLocal = localStorage.getItem('compodoc_darkmode-state');
+
+               function checkToggle(check) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].checked = check;
+                    }
+               }
+
+               function toggleDarkMode(state) {
+                    if (window.localStorage) {
+                         localStorage.setItem('compodoc_darkmode-state', state);
+                    }
+
+                    checkToggle(state);
+
+                    const hasClass = document.body.classList.contains('dark');
+
+                    if (state) {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.add('dark');
+                         }
+                         if (!hasClass) {
+                              document.body.classList.add('dark');
+                         }
+                    } else {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.remove('dark');
+                         }
+                         if (hasClass) {
+                              document.body.classList.remove('dark');
+                         }
+                    }
+               }
+
+               useDark.addEventListener('change', function (evt) {
+                    toggleDarkMode(evt.matches);
+               });
+               if (darkModeStateLocal) {
+                    darkModeState = darkModeStateLocal === 'true';
+               }
+               toggleDarkMode(darkModeState);
+          </script>
+          <script>
+              // --- Iframe navigation tracking for Template Playground ---
+              function sendCurrentUrlToParent() {
+                  if (window.parent && window.parent !== window) {
+                      window.parent.postMessage({
+                          type: 'compodoc-iframe-navigate',
+                          url: window.location.pathname + window.location.hash
+                      }, '*');
+                  }
+              }
+              window.addEventListener('hashchange', sendCurrentUrlToParent, false);
+              window.addEventListener('popstate', sendCurrentUrlToParent, false);
+              window.addEventListener('DOMContentLoaded', sendCurrentUrlToParent, false);
+          </script>
+
+        <div class="navbar navbar-default navbar-fixed-top d-md-none p-0">
+               <div class="d-flex">
+                    <a href="../" class="navbar-brand">invensystem documentation</a>
+                    <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+               </div>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="d-none d-md-block menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content component">
+                   <div class="content-data">
+
+
+
+
+
+
+
+
+<ol class="breadcrumb">
+  <li class="breadcrumb-item">Components</li>
+  <li class="breadcrumb-item"
+  >
+  PosComponent</li>
+</ol>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="nav-item">
+            <a href="#info" class="nav-link active"
+                role="tab" id="info-tab" data-bs-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li class="nav-item">
+            <a href="#source" class="nav-link"
+                role="tab" id="source-tab" data-bs-toggle="tab" data-link="source">Source</a>
+        </li>
+        <li class="nav-item">
+            <a href="#templateData" class="nav-link"
+                role="tab" id="templateData-tab" data-bs-toggle="tab" data-link="template">Template</a>
+        </li>
+        <li class="nav-item">
+            <a href="#styleData" class="nav-link"
+                role="tab" id="styleData-tab" data-bs-toggle="tab" data-link="style">Styles</a>
+        </li>
+        <li class="nav-item">
+            <a href="#tree" class="nav-link"
+                role="tab" id="tree-tab" data-bs-toggle="tab" data-link="dom-tree">DOM Tree</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="info"><p class="comment">
+    <h3>File</h3>
+</p>
+<p class="comment">
+    <code>src/app/pos/pos.ts</code>
+</p>
+
+
+
+
+    <p class="comment">
+        <h3>Implements</h3>
+    </p>
+    <p class="comment">
+                    <code><a href="https://angular.io/api/core/OnInit" target="_blank" >OnInit</a></code>
+    </p>
+
+
+<section data-compodoc="block-metadata">
+    <h3>Metadata</h3>
+    <table class="table table-sm table-hover metadata">
+        <tbody>
+
+
+
+
+
+
+
+
+
+
+
+
+            <tr>
+                <td class="col-md-3">selector</td>
+                <td class="col-md-9"><code>app-pos</code></td>
+            </tr>
+
+            <tr>
+                <td class="col-md-3">standalone</td>
+                <td class="col-md-9"><code>true</code></td>
+            </tr>
+
+            <tr>
+                <td class="col-md-3">imports</td>
+                <td class="col-md-9">
+                                <code><a href="https://angular.io/api/common/CommonModule" target="_blank" >CommonModule</a></code>
+                                <code><a href="https://angular.io/api/forms/FormsModule" target="_blank" >FormsModule</a></code>
+                                <code><a href="../components/NavigationComponent.html" target="_self" >NavigationComponent</a></code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-3">styleUrls</td>
+                <td class="col-md-9"><code>./pos.css</code></td>
+            </tr>
+
+
+
+            <tr>
+                <td class="col-md-3">templateUrl</td>
+                <td class="col-md-9"><code>./pos.html</code></td>
+            </tr>
+
+
+
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+    <section data-compodoc="block-index">
+    <h3 id="index">Index</h3>
+    <table class="table table-sm table-bordered index-table">
+        <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Properties</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#allItems" >allItems</a>
+                            </li>
+                            <li>
+                                <a href="#cart" >cart</a>
+                            </li>
+                            <li>
+                                <a href="#categories" >categories</a>
+                            </li>
+                            <li>
+                                <a href="#currentSale" >currentSale</a>
+                            </li>
+                            <li>
+                                <a href="#error" >error</a>
+                            </li>
+                            <li>
+                                <a href="#filteredItems" >filteredItems</a>
+                            </li>
+                            <li>
+                                <a href="#isLoadingHistory" >isLoadingHistory</a>
+                            </li>
+                            <li>
+                                <a href="#isLoadingItems" >isLoadingItems</a>
+                            </li>
+                            <li>
+                                <a href="#isProcessing" >isProcessing</a>
+                            </li>
+                            <li>
+                                <a href="#salesHistory" >salesHistory</a>
+                            </li>
+                            <li>
+                                <a href="#searchTerm" >searchTerm</a>
+                            </li>
+                            <li>
+                                <a href="#searchTimeout" >searchTimeout</a>
+                            </li>
+                            <li>
+                                <a href="#selectedCategory" >selectedCategory</a>
+                            </li>
+                            <li>
+                                <a href="#showBill" >showBill</a>
+                            </li>
+                            <li>
+                                <a href="#username" >username</a>
+                            </li>
+                            <li>
+                                <a href="#userRole" >userRole</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Readonly</span>
+                                <a href="#VAT_RATE" >VAT_RATE</a>
+                            </li>
+                            <li>
+                                <a href="#viewMode" >viewMode</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Methods</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#addToCart" >addToCart</a>
+                            </li>
+                            <li>
+                                <a href="#applyFilter" >applyFilter</a>
+                            </li>
+                            <li>
+                                <a href="#clearCart" >clearCart</a>
+                            </li>
+                            <li>
+                                <a href="#closeBill" >closeBill</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#generateBill" >generateBill</a>
+                            </li>
+                            <li>
+                                <a href="#getCartQty" >getCartQty</a>
+                            </li>
+                            <li>
+                                <a href="#getPhotoUrl" >getPhotoUrl</a>
+                            </li>
+                            <li>
+                                <a href="#getStockClass" >getStockClass</a>
+                            </li>
+                            <li>
+                                <a href="#getStockLabel" >getStockLabel</a>
+                            </li>
+                            <li>
+                                <a href="#isInCart" >isInCart</a>
+                            </li>
+                            <li>
+                                <a href="#loadAllItems" >loadAllItems</a>
+                            </li>
+                            <li>
+                                <a href="#ngOnInit" >ngOnInit</a>
+                            </li>
+                            <li>
+                                <a href="#onCategoryChange" >onCategoryChange</a>
+                            </li>
+                            <li>
+                                <a href="#onSearch" >onSearch</a>
+                            </li>
+                            <li>
+                                <a href="#printBill" >printBill</a>
+                            </li>
+                            <li>
+                                <a href="#processSale" >processSale</a>
+                            </li>
+                            <li>
+                                <a href="#removeFromCart" >removeFromCart</a>
+                            </li>
+                            <li>
+                                <a href="#setQuantity" >setQuantity</a>
+                            </li>
+                            <li>
+                                <a href="#switchToHistory" >switchToHistory</a>
+                            </li>
+                            <li>
+                                <a href="#switchToPos" >switchToPos</a>
+                            </li>
+                            <li>
+                                <a href="#updateQuantity" >updateQuantity</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+
+
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <h6><b>Accessors</b></h6>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <ul class="index-list">
+                                <li>
+                                    <a href="#subtotal" >subtotal</a>
+                                </li>
+                                <li>
+                                    <a href="#vatAmount" >vatAmount</a>
+                                </li>
+                                <li>
+                                    <a href="#total" >total</a>
+                                </li>
+                                <li>
+                                    <a href="#totalItems" >totalItems</a>
+                                </li>
+                            </ul>
+                        </td>
+                    </tr>
+        </tbody>
+    </table>
+</section>
+
+    <section data-compodoc="block-constructor">
+    <h3 id="constructor">Constructor</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+<code>constructor(inventoryService: <a href="../injectables/InventoryDataService.html" target="_self">InventoryDataService</a>, authService: <a href="../injectables/AuthService.html" target="_self">AuthService</a>, router: <a href="https://angular.io/api/router/Router" target="_blank">Router</a>, webService: <a href="../injectables/WebService.html" target="_self">WebService</a>)</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="49" class="link-to-prism">src/app/pos/pos.ts:49</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                            <div>
+                                    <b>Parameters :</b>
+                                    <table class="params">
+                                        <thead>
+                                            <tr>
+                                                <td>Name</td>
+                                                    <td>Type</td>
+                                                <td>Optional</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                <tr>
+                                                        <td>inventoryService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/InventoryDataService.html" target="_self" >InventoryDataService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>authService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/AuthService.html" target="_self" >AuthService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>router</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="https://angular.io/api/router/Router" target="_blank" >Router</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>webService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/WebService.html" target="_self" >WebService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+</section>
+
+
+
+
+
+    <section data-compodoc="block-methods">
+    
+    <h3 id="methods">
+        Methods
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="addToCart"></a>
+                    <span class="name">
+                        <span ><b>addToCart</b></span>
+                        <a href="#addToCart"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>addToCart(item: <a href="../interfaces/InventoryItem.html" target="_self">InventoryItem</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="125"
+                                    class="link-to-prism">src/app/pos/pos.ts:125</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>item</td>
+                                            <td>
+                                                            <code><a href="../interfaces/InventoryItem.html" target="_self" >InventoryItem</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="applyFilter"></a>
+                    <span class="name">
+                        <span ><b>applyFilter</b></span>
+                        <a href="#applyFilter"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>applyFilter()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="101"
+                                    class="link-to-prism">src/app/pos/pos.ts:101</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="clearCart"></a>
+                    <span class="name">
+                        <span ><b>clearCart</b></span>
+                        <a href="#clearCart"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>clearCart()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="158"
+                                    class="link-to-prism">src/app/pos/pos.ts:158</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="closeBill"></a>
+                    <span class="name">
+                        <span ><b>closeBill</b></span>
+                        <a href="#closeBill"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>closeBill()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="233"
+                                    class="link-to-prism">src/app/pos/pos.ts:233</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="generateBill"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                        <span ><b>generateBill</b></span>
+                        <a href="#generateBill"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>generateBill()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="200"
+                                    class="link-to-prism">src/app/pos/pos.ts:200</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getCartQty"></a>
+                    <span class="name">
+                        <span ><b>getCartQty</b></span>
+                        <a href="#getCartQty"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getCartQty(itemId: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="160"
+                                    class="link-to-prism">src/app/pos/pos.ts:160</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>itemId</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getPhotoUrl"></a>
+                    <span class="name">
+                        <span ><b>getPhotoUrl</b></span>
+                        <a href="#getPhotoUrl"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getPhotoUrl(photoPath: string | undefined)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="240"
+                                    class="link-to-prism">src/app/pos/pos.ts:240</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>photoPath</td>
+                                            <td>
+                                                        <code>string | undefined</code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getStockClass"></a>
+                    <span class="name">
+                        <span ><b>getStockClass</b></span>
+                        <a href="#getStockClass"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getStockClass(item: <a href="../interfaces/InventoryItem.html" target="_self">InventoryItem</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="245"
+                                    class="link-to-prism">src/app/pos/pos.ts:245</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>item</td>
+                                            <td>
+                                                            <code><a href="../interfaces/InventoryItem.html" target="_self" >InventoryItem</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getStockLabel"></a>
+                    <span class="name">
+                        <span ><b>getStockLabel</b></span>
+                        <a href="#getStockLabel"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getStockLabel(item: <a href="../interfaces/InventoryItem.html" target="_self">InventoryItem</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="250"
+                                    class="link-to-prism">src/app/pos/pos.ts:250</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>item</td>
+                                            <td>
+                                                            <code><a href="../interfaces/InventoryItem.html" target="_self" >InventoryItem</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="isInCart"></a>
+                    <span class="name">
+                        <span ><b>isInCart</b></span>
+                        <a href="#isInCart"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>isInCart(itemId: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="159"
+                                    class="link-to-prism">src/app/pos/pos.ts:159</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>itemId</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="loadAllItems"></a>
+                    <span class="name">
+                        <span ><b>loadAllItems</b></span>
+                        <a href="#loadAllItems"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>loadAllItems()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="88"
+                                    class="link-to-prism">src/app/pos/pos.ts:88</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="ngOnInit"></a>
+                    <span class="name">
+                        <span ><b>ngOnInit</b></span>
+                        <a href="#ngOnInit"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>ngOnInit()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="58"
+                                    class="link-to-prism">src/app/pos/pos.ts:58</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="onCategoryChange"></a>
+                    <span class="name">
+                        <span ><b>onCategoryChange</b></span>
+                        <a href="#onCategoryChange"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>onCategoryChange()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="122"
+                                    class="link-to-prism">src/app/pos/pos.ts:122</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="onSearch"></a>
+                    <span class="name">
+                        <span ><b>onSearch</b></span>
+                        <a href="#onSearch"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>onSearch()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="117"
+                                    class="link-to-prism">src/app/pos/pos.ts:117</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="printBill"></a>
+                    <span class="name">
+                        <span ><b>printBill</b></span>
+                        <a href="#printBill"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>printBill()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="239"
+                                    class="link-to-prism">src/app/pos/pos.ts:239</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="processSale"></a>
+                    <span class="name">
+                        <span ><b>processSale</b></span>
+                        <a href="#processSale"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>processSale()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="168"
+                                    class="link-to-prism">src/app/pos/pos.ts:168</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="removeFromCart"></a>
+                    <span class="name">
+                        <span ><b>removeFromCart</b></span>
+                        <a href="#removeFromCart"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>removeFromCart(itemId: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="135"
+                                    class="link-to-prism">src/app/pos/pos.ts:135</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>itemId</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="setQuantity"></a>
+                    <span class="name">
+                        <span ><b>setQuantity</b></span>
+                        <a href="#setQuantity"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>setQuantity(cartItem: <a href="../interfaces/CartItem.html" target="_self">CartItem</a>, value: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="148"
+                                    class="link-to-prism">src/app/pos/pos.ts:148</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>cartItem</td>
+                                            <td>
+                                                            <code><a href="../interfaces/CartItem.html" target="_self" >CartItem</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                        <tr>
+                                                <td>value</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="switchToHistory"></a>
+                    <span class="name">
+                        <span ><b>switchToHistory</b></span>
+                        <a href="#switchToHistory"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>switchToHistory()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="68"
+                                    class="link-to-prism">src/app/pos/pos.ts:68</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="switchToPos"></a>
+                    <span class="name">
+                        <span ><b>switchToPos</b></span>
+                        <a href="#switchToPos"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>switchToPos()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="83"
+                                    class="link-to-prism">src/app/pos/pos.ts:83</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="updateQuantity"></a>
+                    <span class="name">
+                        <span ><b>updateQuantity</b></span>
+                        <a href="#updateQuantity"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>updateQuantity(cartItem: <a href="../interfaces/CartItem.html" target="_self">CartItem</a>, delta: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="139"
+                                    class="link-to-prism">src/app/pos/pos.ts:139</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>cartItem</td>
+                                            <td>
+                                                            <code><a href="../interfaces/CartItem.html" target="_self" >CartItem</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                        <tr>
+                                                <td>delta</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+    <section data-compodoc="block-properties">
+    
+    <h3 id="inputs">
+        Properties
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="allItems"></a>
+                    <span class="name">
+                        <span ><b>allItems</b></span>
+                        <a href="#allItems"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../interfaces/InventoryItem.html" target="_self" >InventoryItem[]</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>[]</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="29" class="link-to-prism">src/app/pos/pos.ts:29</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="cart"></a>
+                    <span class="name">
+                        <span ><b>cart</b></span>
+                        <a href="#cart"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../interfaces/CartItem.html" target="_self" >CartItem[]</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>[]</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="40" class="link-to-prism">src/app/pos/pos.ts:40</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="categories"></a>
+                    <span class="name">
+                        <span ><b>categories</b></span>
+                        <a href="#categories"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>string[]</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>[]</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="31" class="link-to-prism">src/app/pos/pos.ts:31</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="currentSale"></a>
+                    <span class="name">
+                        <span ><b>currentSale</b></span>
+                        <a href="#currentSale"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>null</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="44" class="link-to-prism">src/app/pos/pos.ts:44</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="error"></a>
+                    <span class="name">
+                        <span ><b>error</b></span>
+                        <a href="#error"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>string | null</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>null</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="47" class="link-to-prism">src/app/pos/pos.ts:47</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="filteredItems"></a>
+                    <span class="name">
+                        <span ><b>filteredItems</b></span>
+                        <a href="#filteredItems"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../interfaces/InventoryItem.html" target="_self" >InventoryItem[]</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>[]</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="30" class="link-to-prism">src/app/pos/pos.ts:30</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="isLoadingHistory"></a>
+                    <span class="name">
+                        <span ><b>isLoadingHistory</b></span>
+                        <a href="#isLoadingHistory"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>false</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="26" class="link-to-prism">src/app/pos/pos.ts:26</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="isLoadingItems"></a>
+                    <span class="name">
+                        <span ><b>isLoadingItems</b></span>
+                        <a href="#isLoadingItems"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>true</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="33" class="link-to-prism">src/app/pos/pos.ts:33</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="isProcessing"></a>
+                    <span class="name">
+                        <span ><b>isProcessing</b></span>
+                        <a href="#isProcessing"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>false</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="42" class="link-to-prism">src/app/pos/pos.ts:42</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="salesHistory"></a>
+                    <span class="name">
+                        <span ><b>salesHistory</b></span>
+                        <a href="#salesHistory"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>any[]</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>[]</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="25" class="link-to-prism">src/app/pos/pos.ts:25</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="searchTerm"></a>
+                    <span class="name">
+                        <span ><b>searchTerm</b></span>
+                        <a href="#searchTerm"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>&#x27;&#x27;</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="36" class="link-to-prism">src/app/pos/pos.ts:36</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="searchTimeout"></a>
+                    <span class="name">
+                        <span ><b>searchTimeout</b></span>
+                        <a href="#searchTimeout"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="37" class="link-to-prism">src/app/pos/pos.ts:37</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="selectedCategory"></a>
+                    <span class="name">
+                        <span ><b>selectedCategory</b></span>
+                        <a href="#selectedCategory"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>&#x27;all&#x27;</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="32" class="link-to-prism">src/app/pos/pos.ts:32</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="showBill"></a>
+                    <span class="name">
+                        <span ><b>showBill</b></span>
+                        <a href="#showBill"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>false</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="43" class="link-to-prism">src/app/pos/pos.ts:43</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="username"></a>
+                    <span class="name">
+                        <span ><b>username</b></span>
+                        <a href="#username"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>string | null</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>null</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="45" class="link-to-prism">src/app/pos/pos.ts:45</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="userRole"></a>
+                    <span class="name">
+                        <span ><b>userRole</b></span>
+                        <a href="#userRole"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>&quot;Admin&quot; | &quot;Staff&quot; | null</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>null</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="46" class="link-to-prism">src/app/pos/pos.ts:46</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="VAT_RATE"></a>
+                    <span class="name">
+                            <span class="modifier">Readonly</span>
+                        <span ><b>VAT_RATE</b></span>
+                        <a href="#VAT_RATE"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>0.20</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="49" class="link-to-prism">src/app/pos/pos.ts:49</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="viewMode"></a>
+                    <span class="name">
+                        <span ><b>viewMode</b></span>
+                        <a href="#viewMode"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>&quot;pos&quot; | &quot;history&quot;</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>&#x27;pos&#x27;</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="24" class="link-to-prism">src/app/pos/pos.ts:24</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+</section>
+
+    <section data-compodoc="block-accessors">
+    <h3 id="accessors">
+        Accessors
+    </h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="subtotal"></a>
+                        <span class="name"><b>subtotal</b><a href="#subtotal"><span class="icon ion-ios-link"></span></a></span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <span class="accessor"><b>get</b><code>subtotal()</code></span>
+                    </td>
+                </tr>
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="162" class="link-to-prism">src/app/pos/pos.ts:162</a></div>
+                                </td>
+                            </tr>
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="vatAmount"></a>
+                        <span class="name"><b>vatAmount</b><a href="#vatAmount"><span class="icon ion-ios-link"></span></a></span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <span class="accessor"><b>get</b><code>vatAmount()</code></span>
+                    </td>
+                </tr>
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="163" class="link-to-prism">src/app/pos/pos.ts:163</a></div>
+                                </td>
+                            </tr>
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="total"></a>
+                        <span class="name"><b>total</b><a href="#total"><span class="icon ion-ios-link"></span></a></span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <span class="accessor"><b>get</b><code>total()</code></span>
+                    </td>
+                </tr>
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="164" class="link-to-prism">src/app/pos/pos.ts:164</a></div>
+                                </td>
+                            </tr>
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="totalItems"></a>
+                        <span class="name"><b>totalItems</b><a href="#totalItems"><span class="icon ion-ios-link"></span></a></span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <span class="accessor"><b>get</b><code>totalItems()</code></span>
+                    </td>
+                </tr>
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="165" class="link-to-prism">src/app/pos/pos.ts:165</a></div>
+                                </td>
+                            </tr>
+
+            </tbody>
+        </table>
+</section>
+</div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Component, OnInit } from &#x27;@angular/core&#x27;;
+import { CommonModule } from &#x27;@angular/common&#x27;;
+import { FormsModule } from &#x27;@angular/forms&#x27;;
+import { Router } from &#x27;@angular/router&#x27;;
+import { AuthService } from &#x27;../auth.service&#x27;;
+import { NavigationComponent } from &#x27;../navigation/navigation&#x27;;
+import { InventoryDataService, InventoryItem } from &#x27;../inventory-data&#x27;;
+import { WebService } from &#x27;../web-services&#x27;; // &lt;-- ADD THIS IMPORT
+
+export interface CartItem {
+  item: InventoryItem;
+  quantity: number;
+}
+
+@Component({
+  selector: &#x27;app-pos&#x27;,
+  standalone: true,
+  imports: [CommonModule, FormsModule, NavigationComponent],
+  templateUrl: &#x27;./pos.html&#x27;,
+  styleUrls: [&#x27;./pos.css&#x27;]
+})
+export class PosComponent implements OnInit {
+  // View State 
+  viewMode: &#x27;pos&#x27; | &#x27;history&#x27; &#x3D; &#x27;pos&#x27;; // Tracks which screen we&#x27;re on
+  salesHistory: any[] &#x3D; [];
+  isLoadingHistory &#x3D; false;
+
+  // All items for the grid
+  allItems: InventoryItem[] &#x3D; [];
+  filteredItems: InventoryItem[] &#x3D; [];
+  categories: string[] &#x3D; [];
+  selectedCategory &#x3D; &#x27;all&#x27;;
+  isLoadingItems &#x3D; true;
+
+  // Search
+  searchTerm &#x3D; &#x27;&#x27;;
+  searchTimeout: any;
+
+  // Cart
+  cart: CartItem[] &#x3D; [];
+
+  isProcessing &#x3D; false;
+  showBill &#x3D; false;
+  currentSale: any &#x3D; null;
+  username: string | null &#x3D; null;
+  userRole: &#x27;Admin&#x27; | &#x27;Staff&#x27; | null &#x3D; null;
+  error: string | null &#x3D; null;
+
+  readonly VAT_RATE &#x3D; 0.20;
+
+  constructor(
+    private inventoryService: InventoryDataService,
+    private authService: AuthService,
+    private router: Router,
+    private webService: WebService // &lt;-- INJECT WebService
+  ) {}
+
+  ngOnInit(): void {
+    this.authService.userRole$.subscribe(role &#x3D;&gt; this.userRole &#x3D; role);
+    this.authService.username$.subscribe(name &#x3D;&gt; this.username &#x3D; name);
+    this.authService.isAuthenticated$.subscribe(auth &#x3D;&gt; {
+      if (!auth) this.router.navigate([&#x27;/login&#x27;]);
+    });
+    this.loadAllItems();
+  }
+
+  // View Toggles
+  switchToHistory(): void {
+    this.viewMode &#x3D; &#x27;history&#x27;;
+    this.isLoadingHistory &#x3D; true;
+    this.webService.get&lt;any[]&gt;(&#x27;/api/sales&#x27;).subscribe({
+      next: (sales) &#x3D;&gt; {
+        this.salesHistory &#x3D; sales;
+        this.isLoadingHistory &#x3D; false;
+      },
+      error: () &#x3D;&gt; {
+        this.isLoadingHistory &#x3D; false;
+        this.error &#x3D; &quot;Failed to load sales history.&quot;;
+      }
+    });
+  }
+
+  switchToPos(): void {
+    this.viewMode &#x3D; &#x27;pos&#x27;;
+    this.loadAllItems(); // Refresh inventory items when switching back
+  }
+
+  loadAllItems(): void {
+    this.isLoadingItems &#x3D; true;
+    this.inventoryService.getAll(1, 100, &#x27;&#x27;).subscribe({
+      next: (items) &#x3D;&gt; {
+        this.allItems &#x3D; items;
+        this.categories &#x3D; [...new Set(items.map(i &#x3D;&gt; i.category).filter(Boolean))];
+        this.applyFilter();
+        this.isLoadingItems &#x3D; false;
+      },
+      error: () &#x3D;&gt; { this.isLoadingItems &#x3D; false; }
+    });
+  }
+
+  applyFilter(): void {
+    let items &#x3D; this.allItems.filter(i &#x3D;&gt; i.quantity_in_stock &gt; 0);
+    if (this.selectedCategory !&#x3D;&#x3D; &#x27;all&#x27;) {
+      items &#x3D; items.filter(i &#x3D;&gt; i.category &#x3D;&#x3D;&#x3D; this.selectedCategory);
+    }
+    if (this.searchTerm.trim()) {
+      const term &#x3D; this.searchTerm.toLowerCase();
+      items &#x3D; items.filter(i &#x3D;&gt;
+        i.item_name.toLowerCase().includes(term) ||
+        i.item_id.toLowerCase().includes(term) ||
+        i.category.toLowerCase().includes(term)
+      );
+    }
+    this.filteredItems &#x3D; items;
+  }
+
+  onSearch(): void {
+    clearTimeout(this.searchTimeout);
+    this.searchTimeout &#x3D; setTimeout(() &#x3D;&gt; this.applyFilter(), 200);
+  }
+
+  onCategoryChange(): void { this.applyFilter(); }
+
+  //  Cart 
+  addToCart(item: InventoryItem): void {
+    if (item.quantity_in_stock &#x3D;&#x3D;&#x3D; 0) return;
+    const existing &#x3D; this.cart.find(c &#x3D;&gt; c.item.item_id &#x3D;&#x3D;&#x3D; item.item_id);
+    if (existing) {
+      if (existing.quantity &lt; item.quantity_in_stock) existing.quantity++;
+    } else {
+      this.cart.push({ item, quantity: 1 });
+    }
+  }
+
+  removeFromCart(itemId: string): void {
+    this.cart &#x3D; this.cart.filter(c &#x3D;&gt; c.item.item_id !&#x3D;&#x3D; itemId);
+  }
+
+  updateQuantity(cartItem: CartItem, delta: number): void {
+    const newQty &#x3D; cartItem.quantity + delta;
+    if (newQty &lt;&#x3D; 0) {
+      this.removeFromCart(cartItem.item.item_id);
+    } else if (newQty &lt;&#x3D; cartItem.item.quantity_in_stock) {
+      cartItem.quantity &#x3D; newQty;
+    }
+  }
+
+  setQuantity(cartItem: CartItem, value: number): void {
+    if (value &lt;&#x3D; 0) {
+      this.removeFromCart(cartItem.item.item_id);
+    } else if (value &lt;&#x3D; cartItem.item.quantity_in_stock) {
+      cartItem.quantity &#x3D; value;
+    } else {
+      cartItem.quantity &#x3D; cartItem.item.quantity_in_stock;
+    }
+  }
+
+  clearCart(): void { this.cart &#x3D; []; }
+  isInCart(itemId: string): boolean { return this.cart.some(c &#x3D;&gt; c.item.item_id &#x3D;&#x3D;&#x3D; itemId); }
+  getCartQty(itemId: string): number { return this.cart.find(c &#x3D;&gt; c.item.item_id &#x3D;&#x3D;&#x3D; itemId)?.quantity ?? 0; }
+
+  get subtotal(): number { return this.cart.reduce((sum, c) &#x3D;&gt; sum + c.item.unit_price * c.quantity, 0); }
+  get vatAmount(): number { return this.subtotal * this.VAT_RATE; }
+  get total(): number { return this.subtotal + this.vatAmount; }
+  get totalItems(): number { return this.cart.reduce((sum, c) &#x3D;&gt; sum + c.quantity, 0); }
+
+  // --- Process Sale ---
+  processSale(): void {
+    if (this.cart.length &#x3D;&#x3D;&#x3D; 0) return;
+    this.isProcessing &#x3D; true;
+    this.error &#x3D; null;
+
+    const updates &#x3D; this.cart.map(cartItem &#x3D;&gt;
+      this.inventoryService.update(cartItem.item.item_id, {
+        ...cartItem.item,
+        quantity_in_stock: cartItem.item.quantity_in_stock - cartItem.quantity,
+      })
+    );
+
+    let completed &#x3D; 0;
+    let failed &#x3D; false;
+
+    updates.forEach(update$ &#x3D;&gt; {
+      update$.subscribe({
+        next: () &#x3D;&gt; {
+          completed++;
+          if (completed &#x3D;&#x3D;&#x3D; updates.length &amp;&amp; !failed) this.generateBill();
+        },
+        error: () &#x3D;&gt; {
+          if (!failed) {
+            failed &#x3D; true;
+            this.error &#x3D; &#x27;Sale failed — stock could not be updated. Please try again.&#x27;;
+            this.isProcessing &#x3D; false;
+          }
+        }
+      });
+    });
+  }
+
+  private generateBill(): void {
+    this.currentSale &#x3D; {
+      saleId: &#x27;SALE-&#x27; + Date.now(),
+      date: new Date(),
+      servedBy: this.username,
+      items: this.cart.map(c &#x3D;&gt; ({
+        item_id: c.item.item_id,
+        item_name: c.item.item_name,
+        category: c.item.category,
+        quantity: c.quantity,
+        unit_price: c.item.unit_price,
+        line_total: c.item.unit_price * c.quantity
+      })),
+      subtotal: this.subtotal,
+      vat: this.vatAmount,
+      total: this.total,
+    };
+    
+    // Save the sale to the backend 
+    this.webService.post(&#x27;/api/sales&#x27;, this.currentSale).subscribe({
+      next: () &#x3D;&gt; {
+        this.isProcessing &#x3D; false;
+        this.showBill &#x3D; true;
+      },
+      error: () &#x3D;&gt; {
+        this.error &#x3D; &#x27;Inventory updated, but failed to record the sale history.&#x27;;
+        this.isProcessing &#x3D; false;
+        this.showBill &#x3D; true; // Show it anyway so they can print it
+      }
+    });
+  }
+
+  // (Keep closeBill, printBill, getPhotoUrl, getStockClass, getStockLabel exactly the same)
+  closeBill(): void {
+    this.showBill &#x3D; false;
+    this.cart &#x3D; [];
+    this.currentSale &#x3D; null;
+    this.loadAllItems();
+  }
+  printBill(): void { window.print(); }
+  getPhotoUrl(photoPath: string | undefined): string {
+    if (!photoPath) return &#x27;&#x27;;
+    if (photoPath.startsWith(&#x27;data:image&#x27;)) return photoPath;
+    return &#x60;http://localhost:5001${photoPath}&#x60;;
+  }
+  getStockClass(item: InventoryItem): string {
+    if (item.quantity_in_stock &#x3D;&#x3D;&#x3D; 0) return &#x27;bg-red-100 text-red-700 border-red-200&#x27;;
+    if (item.quantity_in_stock &lt;&#x3D; item.reorder_level) return &#x27;bg-amber-100 text-amber-700 border-amber-200&#x27;;
+    return &#x27;bg-emerald-100 text-emerald-700 border-emerald-200&#x27;;
+  }
+  getStockLabel(item: InventoryItem): string {
+    if (item.quantity_in_stock &#x3D;&#x3D;&#x3D; 0) return &#x27;Out of Stock&#x27;;
+    if (item.quantity_in_stock &lt;&#x3D; item.reorder_level) return &#x27;Low Stock&#x27;;
+    return &#x27;In Stock&#x27;;
+  }
+}</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="templateData">
+        <pre class="line-numbers"><code class="language-html">&lt;div class&#x3D;&quot;min-h-screen bg-gray-50&quot;&gt;
+  &lt;app-navigation [currentPage]&#x3D;&quot;&#x27;pos&#x27;&quot;&gt;&lt;/app-navigation&gt;
+
+  &lt;div class&#x3D;&quot;bg-white border-b border-gray-200 px-6 py-3 flex gap-4&quot;&gt;
+    &lt;button (click)&#x3D;&quot;switchToPos()&quot; [class]&#x3D;&quot;viewMode &#x3D;&#x3D;&#x3D; &#x27;pos&#x27; ? &#x27;bg-gray-900 text-white px-4 py-2 rounded-xl text-sm font-bold shadow-md&#x27; : &#x27;bg-gray-100 text-gray-600 hover:bg-gray-200 px-4 py-2 rounded-xl text-sm font-semibold transition-colors&#x27;&quot;&gt;
+      Point of Sale
+    &lt;/button&gt;
+    &lt;button (click)&#x3D;&quot;switchToHistory()&quot; [class]&#x3D;&quot;viewMode &#x3D;&#x3D;&#x3D; &#x27;history&#x27; ? &#x27;bg-gray-900 text-white px-4 py-2 rounded-xl text-sm font-bold shadow-md&#x27; : &#x27;bg-gray-100 text-gray-600 hover:bg-gray-200 px-4 py-2 rounded-xl text-sm font-semibold transition-colors&#x27;&quot;&gt;
+      Sales History
+    &lt;/button&gt;
+  &lt;/div&gt;
+
+  &lt;div class&#x3D;&quot;flex h-[calc(100vh-129px)]&quot;&gt;
+
+    &lt;ng-container *ngIf&#x3D;&quot;viewMode &#x3D;&#x3D;&#x3D; &#x27;pos&#x27;&quot;&gt;
+      &lt;div class&#x3D;&quot;flex-1 flex flex-col min-w-0 overflow-hidden&quot;&gt;
+
+        &lt;div class&#x3D;&quot;bg-white border-b border-gray-200 px-6 py-4 flex items-center gap-4 shrink-0&quot;&gt;
+          &lt;div class&#x3D;&quot;relative flex-1 max-w-md&quot;&gt;
+            &lt;svg class&#x3D;&quot;absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400&quot; fill&#x3D;&quot;none&quot; stroke&#x3D;&quot;currentColor&quot; viewBox&#x3D;&quot;0 0 24 24&quot;&gt;
+              &lt;path stroke-linecap&#x3D;&quot;round&quot; stroke-linejoin&#x3D;&quot;round&quot; stroke-width&#x3D;&quot;2&quot; d&#x3D;&quot;M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0&quot;/&gt;
+            &lt;/svg&gt;
+            &lt;input
+              type&#x3D;&quot;text&quot;
+              [(ngModel)]&#x3D;&quot;searchTerm&quot;
+              (ngModelChange)&#x3D;&quot;onSearch()&quot;
+              placeholder&#x3D;&quot;Search items...&quot;
+              class&#x3D;&quot;w-full pl-9 pr-4 py-2.5 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-gray-900 focus:border-transparent bg-gray-50&quot;
+            /&gt;
+            &lt;button *ngIf&#x3D;&quot;searchTerm&quot; (click)&#x3D;&quot;searchTerm&#x3D;&#x27;&#x27;; applyFilter()&quot; class&#x3D;&quot;absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-700&quot;&gt;
+              &lt;svg class&#x3D;&quot;w-4 h-4&quot; fill&#x3D;&quot;none&quot; stroke&#x3D;&quot;currentColor&quot; viewBox&#x3D;&quot;0 0 24 24&quot;&gt;&lt;path stroke-linecap&#x3D;&quot;round&quot; stroke-linejoin&#x3D;&quot;round&quot; stroke-width&#x3D;&quot;2&quot; d&#x3D;&quot;M6 18L18 6M6 6l12 12&quot;/&gt;&lt;/svg&gt;
+            &lt;/button&gt;
+          &lt;/div&gt;
+
+          &lt;div class&#x3D;&quot;flex items-center gap-2 overflow-x-auto pb-0.5 flex-1&quot;&gt;
+            &lt;button
+              (click)&#x3D;&quot;selectedCategory&#x3D;&#x27;all&#x27;; onCategoryChange()&quot;
+              [class]&#x3D;&quot;selectedCategory &#x3D;&#x3D;&#x3D; &#x27;all&#x27;
+                ? &#x27;px-4 py-2 rounded-xl text-sm font-semibold bg-gray-900 text-white shadow-md shrink-0&#x27;
+                : &#x27;px-4 py-2 rounded-xl text-sm font-semibold bg-white border border-gray-200 text-gray-600 hover:border-gray-400 hover:text-gray-900 transition-colors shrink-0&#x27;&quot;
+            &gt;All&lt;/button&gt;
+            &lt;button
+              *ngFor&#x3D;&quot;let cat of categories&quot;
+              (click)&#x3D;&quot;selectedCategory&#x3D;cat; onCategoryChange()&quot;
+              [class]&#x3D;&quot;selectedCategory &#x3D;&#x3D;&#x3D; cat
+                ? &#x27;px-4 py-2 rounded-xl text-sm font-semibold bg-gray-900 text-white shadow-md shrink-0&#x27;
+                : &#x27;px-4 py-2 rounded-xl text-sm font-semibold bg-white border border-gray-200 text-gray-600 hover:border-gray-400 hover:text-gray-900 transition-colors shrink-0&#x27;&quot;
+            &gt;{{ cat }}&lt;/button&gt;
+          &lt;/div&gt;
+
+          &lt;div class&#x3D;&quot;text-sm text-gray-500 shrink-0 font-medium&quot;&gt;
+            {{ filteredItems.length }} item{{ filteredItems.length !&#x3D;&#x3D; 1 ? &#x27;s&#x27; : &#x27;&#x27; }}
+          &lt;/div&gt;
+        &lt;/div&gt;
+
+        &lt;div *ngIf&#x3D;&quot;error&quot; class&#x3D;&quot;mx-6 mt-4 bg-red-50 border border-red-200 rounded-xl px-4 py-3&quot;&gt;
+          &lt;p class&#x3D;&quot;text-red-700 text-sm font-medium&quot;&gt;{{ error }}&lt;/p&gt;
+        &lt;/div&gt;
+
+        &lt;div class&#x3D;&quot;flex-1 overflow-y-auto p-6&quot;&gt;
+
+          &lt;div *ngIf&#x3D;&quot;isLoadingItems&quot; class&#x3D;&quot;grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4&quot;&gt;
+            &lt;div *ngFor&#x3D;&quot;let n of [1,2,3,4,5,6,7,8,9,10]&quot; class&#x3D;&quot;bg-white rounded-2xl border border-gray-100 overflow-hidden animate-pulse&quot;&gt;
+              &lt;div class&#x3D;&quot;aspect-square bg-gray-100&quot;&gt;&lt;/div&gt;
+              &lt;div class&#x3D;&quot;p-3 space-y-2&quot;&gt;
+                &lt;div class&#x3D;&quot;h-3 bg-gray-100 rounded-full w-3/4&quot;&gt;&lt;/div&gt;
+                &lt;div class&#x3D;&quot;h-3 bg-gray-100 rounded-full w-1/2&quot;&gt;&lt;/div&gt;
+              &lt;/div&gt;
+            &lt;/div&gt;
+          &lt;/div&gt;
+
+          &lt;div *ngIf&#x3D;&quot;!isLoadingItems&quot; class&#x3D;&quot;grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4&quot;&gt;
+            &lt;div
+              *ngFor&#x3D;&quot;let item of filteredItems&quot;
+              (click)&#x3D;&quot;addToCart(item)&quot;
+              class&#x3D;&quot;group bg-white rounded-2xl border border-gray-100 overflow-hidden cursor-pointer transition-all duration-200 hover:shadow-lg hover:border-gray-300 hover:-translate-y-0.5 relative&quot;
+            &gt;
+              &lt;div *ngIf&#x3D;&quot;isInCart(item.item_id)&quot; class&#x3D;&quot;absolute top-2 left-2 z-10 w-6 h-6 bg-gray-900 text-white rounded-full flex items-center justify-center text-xs font-bold shadow-md&quot;&gt;
+                {{ getCartQty(item.item_id) }}
+              &lt;/div&gt;
+
+              &lt;div class&#x3D;&quot;aspect-square bg-gradient-to-br from-gray-50 to-gray-100 overflow-hidden relative&quot;&gt;
+                &lt;img
+                  *ngIf&#x3D;&quot;item.photos &amp;&amp; item.photos.length &gt; 0&quot;
+                  [src]&#x3D;&quot;getPhotoUrl(item.photos[0])&quot;
+                  [alt]&#x3D;&quot;item.item_name&quot;
+                  class&#x3D;&quot;w-full h-full object-cover group-hover:scale-105 transition-transform duration-300&quot;
+                /&gt;
+                &lt;div *ngIf&#x3D;&quot;!item.photos || item.photos.length &#x3D;&#x3D;&#x3D; 0&quot; class&#x3D;&quot;w-full h-full flex flex-col items-center justify-center gap-2&quot;&gt;
+                  &lt;svg class&#x3D;&quot;w-10 h-10 text-gray-300&quot; fill&#x3D;&quot;none&quot; stroke&#x3D;&quot;currentColor&quot; viewBox&#x3D;&quot;0 0 24 24&quot;&gt;
+                    &lt;path stroke-linecap&#x3D;&quot;round&quot; stroke-linejoin&#x3D;&quot;round&quot; stroke-width&#x3D;&quot;1.5&quot; d&#x3D;&quot;M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4&quot;/&gt;
+                  &lt;/svg&gt;
+                  &lt;span class&#x3D;&quot;text-[10px] text-gray-400 font-medium&quot;&gt;No image&lt;/span&gt;
+                &lt;/div&gt;
+
+                &lt;div class&#x3D;&quot;absolute inset-0 bg-gray-900 bg-opacity-0 group-hover:bg-opacity-10 transition-all duration-200 flex items-center justify-center&quot;&gt;
+                  &lt;div class&#x3D;&quot;opacity-0 group-hover:opacity-100 transition-opacity duration-200 bg-gray-900 text-white text-xs font-bold px-3 py-1.5 rounded-full shadow-lg&quot;&gt;
+                    + Add to cart
+                  &lt;/div&gt;
+                &lt;/div&gt;
+
+                &lt;div class&#x3D;&quot;absolute top-2 right-2&quot;&gt;
+                  &lt;span [class]&#x3D;&quot;&#x27;text-[9px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full border &#x27; + getStockClass(item)&quot;&gt;
+                    {{ getStockLabel(item) }}
+                  &lt;/span&gt;
+                &lt;/div&gt;
+              &lt;/div&gt;
+
+              &lt;div class&#x3D;&quot;p-3&quot;&gt;
+                &lt;p class&#x3D;&quot;font-bold text-gray-900 text-xs leading-tight line-clamp-2 mb-1&quot;&gt;{{ item.item_name }}&lt;/p&gt;
+                &lt;p class&#x3D;&quot;text-[10px] text-gray-400 mb-2 truncate&quot;&gt;{{ item.category }}&lt;/p&gt;
+                &lt;div class&#x3D;&quot;flex items-center justify-between&quot;&gt;
+                  &lt;span class&#x3D;&quot;font-bold text-gray-900 text-sm&quot;&gt;£{{ item.unit_price.toFixed(2) }}&lt;/span&gt;
+                  &lt;span class&#x3D;&quot;text-[10px] text-gray-400&quot;&gt;{{ item.quantity_in_stock }} left&lt;/span&gt;
+                &lt;/div&gt;
+              &lt;/div&gt;
+            &lt;/div&gt;
+          &lt;/div&gt;
+
+          &lt;div *ngIf&#x3D;&quot;!isLoadingItems &amp;&amp; filteredItems.length &#x3D;&#x3D;&#x3D; 0&quot; class&#x3D;&quot;flex flex-col items-center justify-center py-24 text-center&quot;&gt;
+            &lt;div class&#x3D;&quot;w-20 h-20 bg-gray-100 rounded-full flex items-center justify-center mb-4&quot;&gt;
+              &lt;svg class&#x3D;&quot;w-10 h-10 text-gray-300&quot; fill&#x3D;&quot;none&quot; stroke&#x3D;&quot;currentColor&quot; viewBox&#x3D;&quot;0 0 24 24&quot;&gt;
+                &lt;path stroke-linecap&#x3D;&quot;round&quot; stroke-linejoin&#x3D;&quot;round&quot; stroke-width&#x3D;&quot;1.5&quot; d&#x3D;&quot;M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z&quot;/&gt;
+              &lt;/svg&gt;
+            &lt;/div&gt;
+            &lt;p class&#x3D;&quot;text-gray-500 font-semibold&quot;&gt;No items found&lt;/p&gt;
+            &lt;p class&#x3D;&quot;text-gray-400 text-sm mt-1&quot;&gt;Try a different search or category&lt;/p&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+
+      &lt;div class&#x3D;&quot;w-[360px] shrink-0 bg-white border-l border-gray-200 flex flex-col&quot;&gt;
+
+        &lt;div class&#x3D;&quot;px-6 py-5 border-b border-gray-100&quot;&gt;
+          &lt;div class&#x3D;&quot;flex items-center justify-between&quot;&gt;
+            &lt;div class&#x3D;&quot;flex items-center gap-2&quot;&gt;
+              &lt;div class&#x3D;&quot;w-8 h-8 bg-gray-900 rounded-lg flex items-center justify-center&quot;&gt;
+                &lt;svg class&#x3D;&quot;w-4 h-4 text-white&quot; fill&#x3D;&quot;none&quot; stroke&#x3D;&quot;currentColor&quot; viewBox&#x3D;&quot;0 0 24 24&quot;&gt;
+                  &lt;path stroke-linecap&#x3D;&quot;round&quot; stroke-linejoin&#x3D;&quot;round&quot; stroke-width&#x3D;&quot;2&quot; d&#x3D;&quot;M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z&quot;/&gt;
+                &lt;/svg&gt;
+              &lt;/div&gt;
+              &lt;h2 class&#x3D;&quot;font-bold text-gray-900 text-lg&quot;&gt;Order&lt;/h2&gt;
+              &lt;span *ngIf&#x3D;&quot;cart.length &gt; 0&quot; class&#x3D;&quot;bg-gray-900 text-white text-xs font-bold px-2 py-0.5 rounded-full min-w-[22px] text-center&quot;&gt;
+                {{ totalItems }}
+              &lt;/span&gt;
+            &lt;/div&gt;
+            &lt;button *ngIf&#x3D;&quot;cart.length &gt; 0&quot; (click)&#x3D;&quot;clearCart()&quot; class&#x3D;&quot;text-xs text-red-500 hover:text-red-700 font-semibold transition-colors&quot;&gt;
+              Clear all
+            &lt;/button&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+
+        &lt;div *ngIf&#x3D;&quot;cart.length &#x3D;&#x3D;&#x3D; 0&quot; class&#x3D;&quot;flex-1 flex flex-col items-center justify-center text-center px-6&quot;&gt;
+          &lt;div class&#x3D;&quot;w-20 h-20 bg-gray-50 rounded-full flex items-center justify-center mb-4 border-2 border-dashed border-gray-200&quot;&gt;
+            &lt;svg class&#x3D;&quot;w-9 h-9 text-gray-300&quot; fill&#x3D;&quot;none&quot; stroke&#x3D;&quot;currentColor&quot; viewBox&#x3D;&quot;0 0 24 24&quot;&gt;
+              &lt;path stroke-linecap&#x3D;&quot;round&quot; stroke-linejoin&#x3D;&quot;round&quot; stroke-width&#x3D;&quot;1.5&quot; d&#x3D;&quot;M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z&quot;/&gt;
+            &lt;/svg&gt;
+          &lt;/div&gt;
+          &lt;p class&#x3D;&quot;text-gray-500 font-semibold text-sm&quot;&gt;Cart is empty&lt;/p&gt;
+          &lt;p class&#x3D;&quot;text-gray-400 text-xs mt-1&quot;&gt;Click items on the left to add them&lt;/p&gt;
+        &lt;/div&gt;
+
+        &lt;div *ngIf&#x3D;&quot;cart.length &gt; 0&quot; class&#x3D;&quot;flex-1 overflow-y-auto divide-y divide-gray-50&quot;&gt;
+          &lt;div *ngFor&#x3D;&quot;let cartItem of cart&quot; class&#x3D;&quot;flex items-center gap-3 px-5 py-3.5 hover:bg-gray-50 transition-colors&quot;&gt;
+            &lt;div class&#x3D;&quot;w-12 h-12 rounded-xl bg-gray-100 overflow-hidden shrink-0&quot;&gt;
+              &lt;img *ngIf&#x3D;&quot;cartItem.item.photos &amp;&amp; cartItem.item.photos.length &gt; 0&quot; [src]&#x3D;&quot;getPhotoUrl(cartItem.item.photos[0])&quot; class&#x3D;&quot;w-full h-full object-cover&quot;/&gt;
+              &lt;div *ngIf&#x3D;&quot;!cartItem.item.photos || cartItem.item.photos.length &#x3D;&#x3D;&#x3D; 0&quot; class&#x3D;&quot;w-full h-full flex items-center justify-center&quot;&gt;
+                &lt;svg class&#x3D;&quot;w-5 h-5 text-gray-300&quot; fill&#x3D;&quot;none&quot; stroke&#x3D;&quot;currentColor&quot; viewBox&#x3D;&quot;0 0 24 24&quot;&gt;
+                  &lt;path stroke-linecap&#x3D;&quot;round&quot; stroke-linejoin&#x3D;&quot;round&quot; stroke-width&#x3D;&quot;1.5&quot; d&#x3D;&quot;M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4&quot;/&gt;
+                &lt;/svg&gt;
+              &lt;/div&gt;
+            &lt;/div&gt;
+
+            &lt;div class&#x3D;&quot;flex-1 min-w-0&quot;&gt;
+              &lt;p class&#x3D;&quot;font-semibold text-gray-900 text-xs truncate&quot;&gt;{{ cartItem.item.item_name }}&lt;/p&gt;
+              &lt;p class&#x3D;&quot;text-[10px] text-gray-400 mb-1.5&quot;&gt;£{{ cartItem.item.unit_price.toFixed(2) }} each&lt;/p&gt;
+              &lt;div class&#x3D;&quot;flex items-center gap-1.5&quot;&gt;
+                &lt;button (click)&#x3D;&quot;updateQuantity(cartItem, -1)&quot; class&#x3D;&quot;w-6 h-6 rounded-lg bg-gray-100 hover:bg-gray-200 flex items-center justify-center text-gray-700 font-bold text-sm transition-colors&quot;&gt;−&lt;/button&gt;
+                &lt;input
+                  type&#x3D;&quot;number&quot;
+                  [value]&#x3D;&quot;cartItem.quantity&quot;
+                  (change)&#x3D;&quot;setQuantity(cartItem, +$any($event.target).value)&quot;
+                  class&#x3D;&quot;w-9 text-center text-xs font-bold border border-gray-200 rounded-lg py-1 focus:outline-none focus:ring-1 focus:ring-gray-900&quot;
+                  min&#x3D;&quot;1&quot; [max]&#x3D;&quot;cartItem.item.quantity_in_stock&quot;
+                /&gt;
+                &lt;button (click)&#x3D;&quot;updateQuantity(cartItem, 1)&quot; class&#x3D;&quot;w-6 h-6 rounded-lg bg-gray-100 hover:bg-gray-200 flex items-center justify-center text-gray-700 font-bold text-sm transition-colors&quot;&gt;+&lt;/button&gt;
+              &lt;/div&gt;
+            &lt;/div&gt;
+
+            &lt;div class&#x3D;&quot;text-right shrink-0&quot;&gt;
+              &lt;p class&#x3D;&quot;font-bold text-gray-900 text-sm&quot;&gt;£{{ (cartItem.item.unit_price * cartItem.quantity).toFixed(2) }}&lt;/p&gt;
+              &lt;button (click)&#x3D;&quot;removeFromCart(cartItem.item.item_id)&quot; class&#x3D;&quot;mt-1.5 text-gray-300 hover:text-red-500 transition-colors&quot;&gt;
+                &lt;svg class&#x3D;&quot;w-4 h-4&quot; fill&#x3D;&quot;none&quot; stroke&#x3D;&quot;currentColor&quot; viewBox&#x3D;&quot;0 0 24 24&quot;&gt;
+                  &lt;path stroke-linecap&#x3D;&quot;round&quot; stroke-linejoin&#x3D;&quot;round&quot; stroke-width&#x3D;&quot;2&quot; d&#x3D;&quot;M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16&quot;/&gt;
+                &lt;/svg&gt;
+              &lt;/button&gt;
+            &lt;/div&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+
+        &lt;div *ngIf&#x3D;&quot;cart.length &gt; 0&quot; class&#x3D;&quot;border-t border-gray-100 p-5 space-y-3 bg-gray-50&quot;&gt;
+          &lt;div class&#x3D;&quot;flex justify-between text-sm text-gray-500&quot;&gt;
+            &lt;span&gt;Subtotal&lt;/span&gt;
+            &lt;span class&#x3D;&quot;font-semibold text-gray-900&quot;&gt;£{{ subtotal.toFixed(2) }}&lt;/span&gt;
+          &lt;/div&gt;
+          &lt;div class&#x3D;&quot;flex justify-between text-sm text-gray-500&quot;&gt;
+            &lt;span&gt;VAT (20%)&lt;/span&gt;
+            &lt;span class&#x3D;&quot;font-semibold text-gray-900&quot;&gt;£{{ vatAmount.toFixed(2) }}&lt;/span&gt;
+          &lt;/div&gt;
+          &lt;div class&#x3D;&quot;flex justify-between text-base font-bold text-gray-900 pt-2 border-t border-gray-200&quot;&gt;
+            &lt;span&gt;Total&lt;/span&gt;
+            &lt;span class&#x3D;&quot;text-xl&quot;&gt;£{{ total.toFixed(2) }}&lt;/span&gt;
+          &lt;/div&gt;
+
+          &lt;button
+            (click)&#x3D;&quot;processSale()&quot;
+            [disabled]&#x3D;&quot;isProcessing&quot;
+            class&#x3D;&quot;w-full py-4 bg-gray-900 text-white rounded-xl hover:bg-gray-800 disabled:opacity-60 disabled:cursor-not-allowed transition-all font-bold text-sm shadow-lg flex items-center justify-center gap-2 mt-1&quot;
+          &gt;
+            &lt;svg *ngIf&#x3D;&quot;!isProcessing&quot; class&#x3D;&quot;w-5 h-5&quot; fill&#x3D;&quot;none&quot; stroke&#x3D;&quot;currentColor&quot; viewBox&#x3D;&quot;0 0 24 24&quot;&gt;
+              &lt;path stroke-linecap&#x3D;&quot;round&quot; stroke-linejoin&#x3D;&quot;round&quot; stroke-width&#x3D;&quot;2&quot; d&#x3D;&quot;M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z&quot;/&gt;
+            &lt;/svg&gt;
+            &lt;div *ngIf&#x3D;&quot;isProcessing&quot; class&#x3D;&quot;w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin&quot;&gt;&lt;/div&gt;
+            {{ isProcessing ? &#x27;Processing...&#x27; : &#x27;Process Sale · £&#x27; + total.toFixed(2) }}
+          &lt;/button&gt;
+
+          &lt;p class&#x3D;&quot;text-center text-[10px] text-gray-400&quot;&gt;Served by &lt;span class&#x3D;&quot;font-semibold text-gray-600&quot;&gt;{{ username }}&lt;/span&gt;&lt;/p&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/ng-container&gt;
+
+    &lt;ng-container *ngIf&#x3D;&quot;viewMode &#x3D;&#x3D;&#x3D; &#x27;history&#x27;&quot;&gt;
+      &lt;div class&#x3D;&quot;flex-1 p-8 overflow-y-auto w-full max-w-6xl mx-auto&quot;&gt;
+        &lt;h1 class&#x3D;&quot;text-2xl font-bold text-gray-900 mb-6&quot;&gt;Sales History&lt;/h1&gt;
+        
+        &lt;div *ngIf&#x3D;&quot;isLoadingHistory&quot; class&#x3D;&quot;text-center py-10&quot;&gt;Loading history...&lt;/div&gt;
+        &lt;div *ngIf&#x3D;&quot;!isLoadingHistory &amp;&amp; salesHistory.length &#x3D;&#x3D;&#x3D; 0&quot; class&#x3D;&quot;text-center py-10 text-gray-500&quot;&gt;No sales recorded yet.&lt;/div&gt;
+
+        &lt;div *ngIf&#x3D;&quot;!isLoadingHistory &amp;&amp; salesHistory.length &gt; 0&quot; class&#x3D;&quot;bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden&quot;&gt;
+          &lt;table class&#x3D;&quot;w-full text-left border-collapse&quot;&gt;
+            &lt;thead&gt;
+              &lt;tr class&#x3D;&quot;bg-gray-50 text-gray-500 text-xs uppercase tracking-wider&quot;&gt;
+                &lt;th class&#x3D;&quot;p-4 border-b border-gray-200&quot;&gt;Sale ID&lt;/th&gt;
+                &lt;th class&#x3D;&quot;p-4 border-b border-gray-200&quot;&gt;Date&lt;/th&gt;
+                &lt;th class&#x3D;&quot;p-4 border-b border-gray-200&quot;&gt;Served By&lt;/th&gt;
+                &lt;th class&#x3D;&quot;p-4 border-b border-gray-200&quot;&gt;Items Sold&lt;/th&gt;
+                &lt;th class&#x3D;&quot;p-4 border-b border-gray-200 text-right&quot;&gt;Total (£)&lt;/th&gt;
+              &lt;/tr&gt;
+            &lt;/thead&gt;
+            &lt;tbody class&#x3D;&quot;divide-y divide-gray-100 text-sm&quot;&gt;
+              &lt;tr *ngFor&#x3D;&quot;let sale of salesHistory&quot; class&#x3D;&quot;hover:bg-gray-50 transition-colors&quot;&gt;
+                &lt;td class&#x3D;&quot;p-4 font-mono font-medium text-gray-900&quot;&gt;{{ sale.saleId }}&lt;/td&gt;
+                &lt;td class&#x3D;&quot;p-4 text-gray-600&quot;&gt;{{ sale.date | date:&#x27;dd/MM/yyyy HH:mm&#x27; }}&lt;/td&gt;
+                &lt;td class&#x3D;&quot;p-4 text-gray-600&quot;&gt;{{ sale.servedBy || &#x27;System&#x27; }}&lt;/td&gt;
+                &lt;td class&#x3D;&quot;p-4 text-gray-600&quot;&gt;
+                  &lt;span *ngFor&#x3D;&quot;let i of sale.items; let last &#x3D; last&quot;&gt;
+                    {{i.quantity}}x {{i.item_name}}{{last ? &#x27;&#x27; : &#x27;, &#x27;}}
+                  &lt;/span&gt;
+                &lt;/td&gt;
+                &lt;td class&#x3D;&quot;p-4 font-bold text-gray-900 text-right&quot;&gt;£{{ sale.total.toFixed(2) }}&lt;/td&gt;
+              &lt;/tr&gt;
+            &lt;/tbody&gt;
+          &lt;/table&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/ng-container&gt;
+
+  &lt;/div&gt;
+
+  &lt;div *ngIf&#x3D;&quot;showBill &amp;&amp; currentSale&quot; class&#x3D;&quot;fixed inset-0 bg-black bg-opacity-60 z-50 flex items-center justify-center p-6&quot; (click)&#x3D;&quot;closeBill()&quot;&gt;
+    &lt;div class&#x3D;&quot;bg-white rounded-3xl max-w-md w-full max-h-[90vh] overflow-y-auto shadow-2xl&quot; (click)&#x3D;&quot;$event.stopPropagation()&quot; id&#x3D;&quot;bill-printable&quot;&gt;
+
+      &lt;div class&#x3D;&quot;pt-8 pb-6 px-8 text-center border-b border-dashed border-gray-200&quot;&gt;
+        &lt;div class&#x3D;&quot;w-14 h-14 bg-gray-900 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg&quot;&gt;
+          &lt;svg class&#x3D;&quot;w-8 h-8 text-white&quot; fill&#x3D;&quot;none&quot; stroke&#x3D;&quot;currentColor&quot; viewBox&#x3D;&quot;0 0 24 24&quot;&gt;
+            &lt;path stroke-linecap&#x3D;&quot;round&quot; stroke-linejoin&#x3D;&quot;round&quot; stroke-width&#x3D;&quot;2&quot; d&#x3D;&quot;M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4&quot;/&gt;
+          &lt;/svg&gt;
+        &lt;/div&gt;
+        &lt;h2 class&#x3D;&quot;text-2xl font-bold text-gray-900&quot;&gt;Invensystem&lt;/h2&gt;
+        &lt;p class&#x3D;&quot;text-gray-400 text-sm mt-0.5&quot;&gt;Sales Receipt&lt;/p&gt;
+
+        &lt;div class&#x3D;&quot;mt-4 grid grid-cols-2 gap-3 text-left&quot;&gt;
+          &lt;div class&#x3D;&quot;bg-gray-50 rounded-xl p-3&quot;&gt;
+            &lt;p class&#x3D;&quot;text-[10px] text-gray-400 uppercase tracking-wider font-semibold mb-1&quot;&gt;Sale ID&lt;/p&gt;
+            &lt;p class&#x3D;&quot;text-xs font-bold text-gray-900 font-mono&quot;&gt;{{ currentSale.saleId }}&lt;/p&gt;
+          &lt;/div&gt;
+          &lt;div class&#x3D;&quot;bg-gray-50 rounded-xl p-3&quot;&gt;
+            &lt;p class&#x3D;&quot;text-[10px] text-gray-400 uppercase tracking-wider font-semibold mb-1&quot;&gt;Date&lt;/p&gt;
+            &lt;p class&#x3D;&quot;text-xs font-bold text-gray-900&quot;&gt;{{ currentSale.date | date:&#x27;dd/MM/yy HH:mm&#x27; }}&lt;/p&gt;
+          &lt;/div&gt;
+          &lt;div class&#x3D;&quot;bg-gray-50 rounded-xl p-3 col-span-2&quot;&gt;
+            &lt;p class&#x3D;&quot;text-[10px] text-gray-400 uppercase tracking-wider font-semibold mb-1&quot;&gt;Served By&lt;/p&gt;
+            &lt;p class&#x3D;&quot;text-xs font-bold text-gray-900&quot;&gt;{{ currentSale.servedBy }}&lt;/p&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+
+      &lt;div class&#x3D;&quot;px-8 py-5&quot;&gt;
+        &lt;p class&#x3D;&quot;text-[10px] uppercase tracking-wider font-bold text-gray-400 mb-3&quot;&gt;Items Purchased&lt;/p&gt;
+        &lt;div class&#x3D;&quot;space-y-3&quot;&gt;
+          &lt;div *ngFor&#x3D;&quot;let item of currentSale.items&quot; class&#x3D;&quot;flex items-start justify-between gap-3&quot;&gt;
+            &lt;div class&#x3D;&quot;flex-1 min-w-0&quot;&gt;
+              &lt;p class&#x3D;&quot;text-sm font-semibold text-gray-900 leading-tight&quot;&gt;{{ item.item_name }}&lt;/p&gt;
+              &lt;p class&#x3D;&quot;text-xs text-gray-400&quot;&gt;{{ item.quantity }} × £{{ item.unit_price.toFixed(2) }}&lt;/p&gt;
+            &lt;/div&gt;
+            &lt;p class&#x3D;&quot;text-sm font-bold text-gray-900 shrink-0&quot;&gt;£{{ item.line_total.toFixed(2) }}&lt;/p&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+
+      &lt;div class&#x3D;&quot;mx-8 border-t border-dashed border-gray-200 pt-4 pb-2 space-y-2&quot;&gt;
+        &lt;div class&#x3D;&quot;flex justify-between text-sm text-gray-500&quot;&gt;
+          &lt;span&gt;Subtotal&lt;/span&gt;
+          &lt;span class&#x3D;&quot;font-semibold text-gray-900&quot;&gt;£{{ currentSale.subtotal.toFixed(2) }}&lt;/span&gt;
+        &lt;/div&gt;
+        &lt;div class&#x3D;&quot;flex justify-between text-sm text-gray-500&quot;&gt;
+          &lt;span&gt;VAT (20%)&lt;/span&gt;
+          &lt;span class&#x3D;&quot;font-semibold text-gray-900&quot;&gt;£{{ currentSale.vat.toFixed(2) }}&lt;/span&gt;
+        &lt;/div&gt;
+        &lt;div class&#x3D;&quot;flex justify-between text-lg font-bold text-gray-900 pt-2 border-t border-gray-200&quot;&gt;
+          &lt;span&gt;Total Paid&lt;/span&gt;
+          &lt;span&gt;£{{ currentSale.total.toFixed(2) }}&lt;/span&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+
+      &lt;p class&#x3D;&quot;text-center text-xs text-gray-400 py-5&quot;&gt;Thank you for your purchase! 🎉&lt;/p&gt;
+
+      &lt;div class&#x3D;&quot;px-8 pb-8 flex gap-3 no-print&quot;&gt;
+        &lt;button (click)&#x3D;&quot;closeBill()&quot; class&#x3D;&quot;flex-1 py-3 bg-gray-100 text-gray-700 rounded-xl hover:bg-gray-200 transition-colors font-semibold text-sm&quot;&gt;
+          New Sale
+        &lt;/button&gt;
+        &lt;button (click)&#x3D;&quot;printBill()&quot; class&#x3D;&quot;flex-1 py-3 bg-gray-900 text-white rounded-xl hover:bg-gray-800 transition-colors font-semibold text-sm flex items-center justify-center gap-2 shadow-lg&quot;&gt;
+          &lt;svg class&#x3D;&quot;w-4 h-4&quot; fill&#x3D;&quot;none&quot; stroke&#x3D;&quot;currentColor&quot; viewBox&#x3D;&quot;0 0 24 24&quot;&gt;
+            &lt;path stroke-linecap&#x3D;&quot;round&quot; stroke-linejoin&#x3D;&quot;round&quot; stroke-width&#x3D;&quot;2&quot; d&#x3D;&quot;M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z&quot;/&gt;
+          &lt;/svg&gt;
+          Print
+        &lt;/button&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="styleData">
+                <p class="comment">
+                    <code>./pos.css</code>
+                </p>
+                <pre class="line-numbers"><code class="language-scss"></code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="tree">
+        <div id="tree-container"></div>
+        <div class="tree-legend">
+            <div class="title">
+                <b>Legend</b>
+            </div>
+            <div>
+                <div class="color htmlelement"></div><span>Html element</span>
+            </div>
+            <div>
+                <div class="color component"></div><span>Component</span>
+            </div>
+            <div>
+                <div class="color directive"></div><span>Html element with directive</span>
+            </div>
+        </div>
+    </div>
+
+    
+</div>
+
+<script src="../js/libs/vis-network.min.js"></script>
+<script src="../js/libs/htmlparser.js"></script>
+<script src="../js/libs/deep-iterator.js"></script>
+<script>
+        var COMPONENT_TEMPLATE = '<div><div class="min-h-screen bg-gray-50">  <app-navigation [currentPage]="\'pos\'"></app-navigation>  <div class="bg-white border-b border-gray-200 px-6 py-3 flex gap-4">    <button (click)="switchToPos()" [class]="viewMode === \'pos\' ? \'bg-gray-900 text-white px-4 py-2 rounded-xl text-sm font-bold shadow-md\' : \'bg-gray-100 text-gray-600 hover:bg-gray-200 px-4 py-2 rounded-xl text-sm font-semibold transition-colors\'">      Point of Sale    </button>    <button (click)="switchToHistory()" [class]="viewMode === \'history\' ? \'bg-gray-900 text-white px-4 py-2 rounded-xl text-sm font-bold shadow-md\' : \'bg-gray-100 text-gray-600 hover:bg-gray-200 px-4 py-2 rounded-xl text-sm font-semibold transition-colors\'">      Sales History    </button>  </div>  <div class="flex h-[calc(100vh-129px)]">    <ng-container *ngIf="viewMode === \'pos\'">      <div class="flex-1 flex flex-col min-w-0 overflow-hidden">        <div class="bg-white border-b border-gray-200 px-6 py-4 flex items-center gap-4 shrink-0">          <div class="relative flex-1 max-w-md">            <svg class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0"/>            </svg>            <input              type="text"              [(ngModel)]="searchTerm"              (ngModelChange)="onSearch()"              placeholder="Search items..."              class="w-full pl-9 pr-4 py-2.5 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-gray-900 focus:border-transparent bg-gray-50"            />            <button *ngIf="searchTerm" (click)="searchTerm=\'\'; applyFilter()" class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-700">              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>            </button>          </div>          <div class="flex items-center gap-2 overflow-x-auto pb-0.5 flex-1">            <button              (click)="selectedCategory=\'all\'; onCategoryChange()"              [class]="selectedCategory === \'all\'                ? \'px-4 py-2 rounded-xl text-sm font-semibold bg-gray-900 text-white shadow-md shrink-0\'                : \'px-4 py-2 rounded-xl text-sm font-semibold bg-white border border-gray-200 text-gray-600 hover:border-gray-400 hover:text-gray-900 transition-colors shrink-0\'"            >All</button>            <button              *ngFor="let cat of categories"              (click)="selectedCategory=cat; onCategoryChange()"              [class]="selectedCategory === cat                ? \'px-4 py-2 rounded-xl text-sm font-semibold bg-gray-900 text-white shadow-md shrink-0\'                : \'px-4 py-2 rounded-xl text-sm font-semibold bg-white border border-gray-200 text-gray-600 hover:border-gray-400 hover:text-gray-900 transition-colors shrink-0\'"            >{{ cat }}</button>          </div>          <div class="text-sm text-gray-500 shrink-0 font-medium">            {{ filteredItems.length }} item{{ filteredItems.length !== 1 ? \'s\' : \'\' }}          </div>        </div>        <div *ngIf="error" class="mx-6 mt-4 bg-red-50 border border-red-200 rounded-xl px-4 py-3">          <p class="text-red-700 text-sm font-medium">{{ error }}</p>        </div>        <div class="flex-1 overflow-y-auto p-6">          <div *ngIf="isLoadingItems" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">            <div *ngFor="let n of [1,2,3,4,5,6,7,8,9,10]" class="bg-white rounded-2xl border border-gray-100 overflow-hidden animate-pulse">              <div class="aspect-square bg-gray-100"></div>              <div class="p-3 space-y-2">                <div class="h-3 bg-gray-100 rounded-full w-3/4"></div>                <div class="h-3 bg-gray-100 rounded-full w-1/2"></div>              </div>            </div>          </div>          <div *ngIf="!isLoadingItems" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">            <div              *ngFor="let item of filteredItems"              (click)="addToCart(item)"              class="group bg-white rounded-2xl border border-gray-100 overflow-hidden cursor-pointer transition-all duration-200 hover:shadow-lg hover:border-gray-300 hover:-translate-y-0.5 relative"            >              <div *ngIf="isInCart(item.item_id)" class="absolute top-2 left-2 z-10 w-6 h-6 bg-gray-900 text-white rounded-full flex items-center justify-center text-xs font-bold shadow-md">                {{ getCartQty(item.item_id) }}              </div>              <div class="aspect-square bg-gradient-to-br from-gray-50 to-gray-100 overflow-hidden relative">                <img                  *ngIf="item.photos && item.photos.length > 0"                  [src]="getPhotoUrl(item.photos[0])"                  [alt]="item.item_name"                  class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"                />                <div *ngIf="!item.photos || item.photos.length === 0" class="w-full h-full flex flex-col items-center justify-center gap-2">                  <svg class="w-10 h-10 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/>                  </svg>                  <span class="text-[10px] text-gray-400 font-medium">No image</span>                </div>                <div class="absolute inset-0 bg-gray-900 bg-opacity-0 group-hover:bg-opacity-10 transition-all duration-200 flex items-center justify-center">                  <div class="opacity-0 group-hover:opacity-100 transition-opacity duration-200 bg-gray-900 text-white text-xs font-bold px-3 py-1.5 rounded-full shadow-lg">                    + Add to cart                  </div>                </div>                <div class="absolute top-2 right-2">                  <span [class]="\'text-[9px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full border \' + getStockClass(item)">                    {{ getStockLabel(item) }}                  </span>                </div>              </div>              <div class="p-3">                <p class="font-bold text-gray-900 text-xs leading-tight line-clamp-2 mb-1">{{ item.item_name }}</p>                <p class="text-[10px] text-gray-400 mb-2 truncate">{{ item.category }}</p>                <div class="flex items-center justify-between">                  <span class="font-bold text-gray-900 text-sm">£{{ item.unit_price.toFixed(2) }}</span>                  <span class="text-[10px] text-gray-400">{{ item.quantity_in_stock }} left</span>                </div>              </div>            </div>          </div>          <div *ngIf="!isLoadingItems && filteredItems.length === 0" class="flex flex-col items-center justify-center py-24 text-center">            <div class="w-20 h-20 bg-gray-100 rounded-full flex items-center justify-center mb-4">              <svg class="w-10 h-10 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>              </svg>            </div>            <p class="text-gray-500 font-semibold">No items found</p>            <p class="text-gray-400 text-sm mt-1">Try a different search or category</p>          </div>        </div>      </div>      <div class="w-[360px] shrink-0 bg-white border-l border-gray-200 flex flex-col">        <div class="px-6 py-5 border-b border-gray-100">          <div class="flex items-center justify-between">            <div class="flex items-center gap-2">              <div class="w-8 h-8 bg-gray-900 rounded-lg flex items-center justify-center">                <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"/>                </svg>              </div>              <h2 class="font-bold text-gray-900 text-lg">Order</h2>              <span *ngIf="cart.length > 0" class="bg-gray-900 text-white text-xs font-bold px-2 py-0.5 rounded-full min-w-[22px] text-center">                {{ totalItems }}              </span>            </div>            <button *ngIf="cart.length > 0" (click)="clearCart()" class="text-xs text-red-500 hover:text-red-700 font-semibold transition-colors">              Clear all            </button>          </div>        </div>        <div *ngIf="cart.length === 0" class="flex-1 flex flex-col items-center justify-center text-center px-6">          <div class="w-20 h-20 bg-gray-50 rounded-full flex items-center justify-center mb-4 border-2 border-dashed border-gray-200">            <svg class="w-9 h-9 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"/>            </svg>          </div>          <p class="text-gray-500 font-semibold text-sm">Cart is empty</p>          <p class="text-gray-400 text-xs mt-1">Click items on the left to add them</p>        </div>        <div *ngIf="cart.length > 0" class="flex-1 overflow-y-auto divide-y divide-gray-50">          <div *ngFor="let cartItem of cart" class="flex items-center gap-3 px-5 py-3.5 hover:bg-gray-50 transition-colors">            <div class="w-12 h-12 rounded-xl bg-gray-100 overflow-hidden shrink-0">              <img *ngIf="cartItem.item.photos && cartItem.item.photos.length > 0" [src]="getPhotoUrl(cartItem.item.photos[0])" class="w-full h-full object-cover"/>              <div *ngIf="!cartItem.item.photos || cartItem.item.photos.length === 0" class="w-full h-full flex items-center justify-center">                <svg class="w-5 h-5 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/>                </svg>              </div>            </div>            <div class="flex-1 min-w-0">              <p class="font-semibold text-gray-900 text-xs truncate">{{ cartItem.item.item_name }}</p>              <p class="text-[10px] text-gray-400 mb-1.5">£{{ cartItem.item.unit_price.toFixed(2) }} each</p>              <div class="flex items-center gap-1.5">                <button (click)="updateQuantity(cartItem, -1)" class="w-6 h-6 rounded-lg bg-gray-100 hover:bg-gray-200 flex items-center justify-center text-gray-700 font-bold text-sm transition-colors">−</button>                <input                  type="number"                  [value]="cartItem.quantity"                  (change)="setQuantity(cartItem, +$any($event.target).value)"                  class="w-9 text-center text-xs font-bold border border-gray-200 rounded-lg py-1 focus:outline-none focus:ring-1 focus:ring-gray-900"                  min="1" [max]="cartItem.item.quantity_in_stock"                />                <button (click)="updateQuantity(cartItem, 1)" class="w-6 h-6 rounded-lg bg-gray-100 hover:bg-gray-200 flex items-center justify-center text-gray-700 font-bold text-sm transition-colors">+</button>              </div>            </div>            <div class="text-right shrink-0">              <p class="font-bold text-gray-900 text-sm">£{{ (cartItem.item.unit_price * cartItem.quantity).toFixed(2) }}</p>              <button (click)="removeFromCart(cartItem.item.item_id)" class="mt-1.5 text-gray-300 hover:text-red-500 transition-colors">                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>                </svg>              </button>            </div>          </div>        </div>        <div *ngIf="cart.length > 0" class="border-t border-gray-100 p-5 space-y-3 bg-gray-50">          <div class="flex justify-between text-sm text-gray-500">            <span>Subtotal</span>            <span class="font-semibold text-gray-900">£{{ subtotal.toFixed(2) }}</span>          </div>          <div class="flex justify-between text-sm text-gray-500">            <span>VAT (20%)</span>            <span class="font-semibold text-gray-900">£{{ vatAmount.toFixed(2) }}</span>          </div>          <div class="flex justify-between text-base font-bold text-gray-900 pt-2 border-t border-gray-200">            <span>Total</span>            <span class="text-xl">£{{ total.toFixed(2) }}</span>          </div>          <button            (click)="processSale()"            [disabled]="isProcessing"            class="w-full py-4 bg-gray-900 text-white rounded-xl hover:bg-gray-800 disabled:opacity-60 disabled:cursor-not-allowed transition-all font-bold text-sm shadow-lg flex items-center justify-center gap-2 mt-1"          >            <svg *ngIf="!isProcessing" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>            </svg>            <div *ngIf="isProcessing" class="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>            {{ isProcessing ? \'Processing...\' : \'Process Sale · £\' + total.toFixed(2) }}          </button>          <p class="text-center text-[10px] text-gray-400">Served by <span class="font-semibold text-gray-600">{{ username }}</span></p>        </div>      </div>    </ng-container>    <ng-container *ngIf="viewMode === \'history\'">      <div class="flex-1 p-8 overflow-y-auto w-full max-w-6xl mx-auto">        <h1 class="text-2xl font-bold text-gray-900 mb-6">Sales History</h1>                <div *ngIf="isLoadingHistory" class="text-center py-10">Loading history...</div>        <div *ngIf="!isLoadingHistory && salesHistory.length === 0" class="text-center py-10 text-gray-500">No sales recorded yet.</div>        <div *ngIf="!isLoadingHistory && salesHistory.length > 0" class="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden">          <table class="w-full text-left border-collapse">            <thead>              <tr class="bg-gray-50 text-gray-500 text-xs uppercase tracking-wider">                <th class="p-4 border-b border-gray-200">Sale ID</th>                <th class="p-4 border-b border-gray-200">Date</th>                <th class="p-4 border-b border-gray-200">Served By</th>                <th class="p-4 border-b border-gray-200">Items Sold</th>                <th class="p-4 border-b border-gray-200 text-right">Total (£)</th>              </tr>            </thead>            <tbody class="divide-y divide-gray-100 text-sm">              <tr *ngFor="let sale of salesHistory" class="hover:bg-gray-50 transition-colors">                <td class="p-4 font-mono font-medium text-gray-900">{{ sale.saleId }}</td>                <td class="p-4 text-gray-600">{{ sale.date | date:\'dd/MM/yyyy HH:mm\' }}</td>                <td class="p-4 text-gray-600">{{ sale.servedBy || \'System\' }}</td>                <td class="p-4 text-gray-600">                  <span *ngFor="let i of sale.items; let last = last">                    {{i.quantity}}x {{i.item_name}}{{last ? \'\' : \', \'}}                  </span>                </td>                <td class="p-4 font-bold text-gray-900 text-right">£{{ sale.total.toFixed(2) }}</td>              </tr>            </tbody>          </table>        </div>      </div>    </ng-container>  </div>  <div *ngIf="showBill && currentSale" class="fixed inset-0 bg-black bg-opacity-60 z-50 flex items-center justify-center p-6" (click)="closeBill()">    <div class="bg-white rounded-3xl max-w-md w-full max-h-[90vh] overflow-y-auto shadow-2xl" (click)="$event.stopPropagation()" id="bill-printable">      <div class="pt-8 pb-6 px-8 text-center border-b border-dashed border-gray-200">        <div class="w-14 h-14 bg-gray-900 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg">          <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/>          </svg>        </div>        <h2 class="text-2xl font-bold text-gray-900">Invensystem</h2>        <p class="text-gray-400 text-sm mt-0.5">Sales Receipt</p>        <div class="mt-4 grid grid-cols-2 gap-3 text-left">          <div class="bg-gray-50 rounded-xl p-3">            <p class="text-[10px] text-gray-400 uppercase tracking-wider font-semibold mb-1">Sale ID</p>            <p class="text-xs font-bold text-gray-900 font-mono">{{ currentSale.saleId }}</p>          </div>          <div class="bg-gray-50 rounded-xl p-3">            <p class="text-[10px] text-gray-400 uppercase tracking-wider font-semibold mb-1">Date</p>            <p class="text-xs font-bold text-gray-900">{{ currentSale.date | date:\'dd/MM/yy HH:mm\' }}</p>          </div>          <div class="bg-gray-50 rounded-xl p-3 col-span-2">            <p class="text-[10px] text-gray-400 uppercase tracking-wider font-semibold mb-1">Served By</p>            <p class="text-xs font-bold text-gray-900">{{ currentSale.servedBy }}</p>          </div>        </div>      </div>      <div class="px-8 py-5">        <p class="text-[10px] uppercase tracking-wider font-bold text-gray-400 mb-3">Items Purchased</p>        <div class="space-y-3">          <div *ngFor="let item of currentSale.items" class="flex items-start justify-between gap-3">            <div class="flex-1 min-w-0">              <p class="text-sm font-semibold text-gray-900 leading-tight">{{ item.item_name }}</p>              <p class="text-xs text-gray-400">{{ item.quantity }} × £{{ item.unit_price.toFixed(2) }}</p>            </div>            <p class="text-sm font-bold text-gray-900 shrink-0">£{{ item.line_total.toFixed(2) }}</p>          </div>        </div>      </div>      <div class="mx-8 border-t border-dashed border-gray-200 pt-4 pb-2 space-y-2">        <div class="flex justify-between text-sm text-gray-500">          <span>Subtotal</span>          <span class="font-semibold text-gray-900">£{{ currentSale.subtotal.toFixed(2) }}</span>        </div>        <div class="flex justify-between text-sm text-gray-500">          <span>VAT (20%)</span>          <span class="font-semibold text-gray-900">£{{ currentSale.vat.toFixed(2) }}</span>        </div>        <div class="flex justify-between text-lg font-bold text-gray-900 pt-2 border-t border-gray-200">          <span>Total Paid</span>          <span>£{{ currentSale.total.toFixed(2) }}</span>        </div>      </div>      <p class="text-center text-xs text-gray-400 py-5">Thank you for your purchase! 🎉</p>      <div class="px-8 pb-8 flex gap-3 no-print">        <button (click)="closeBill()" class="flex-1 py-3 bg-gray-100 text-gray-700 rounded-xl hover:bg-gray-200 transition-colors font-semibold text-sm">          New Sale        </button>        <button (click)="printBill()" class="flex-1 py-3 bg-gray-900 text-white rounded-xl hover:bg-gray-800 transition-colors font-semibold text-sm flex items-center justify-center gap-2 shadow-lg">          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"/>          </svg>          Print        </button>      </div>    </div>  </div></div></div>'
+    var COMPONENTS = [{'name': 'AppComponent', 'selector': 'app-root'},{'name': 'HomeComponent', 'selector': 'app-home'},{'name': 'InventoryComponent', 'selector': 'app-inventory'},{'name': 'LoginComponent', 'selector': 'app-login'},{'name': 'NavigationComponent', 'selector': 'app-navigation'},{'name': 'PosComponent', 'selector': 'app-pos'},{'name': 'SupplierComponent', 'selector': 'app-supplier'},{'name': 'TestWSComponent', 'selector': 'app-testws'}];
+    var DIRECTIVES = [];
+    var ACTUAL_COMPONENT = {'name': 'PosComponent'};
+</script>
+<script src="../js/tree.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'component';
+            var COMPODOC_CURRENT_PAGE_URL = 'PosComponent.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script>
+               $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               checkToggle(darkModeState);
+               if ($darkModeToggleSwitchers.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+
+       <script src="../js/menu-wc.js" defer></script>
+       <script nomodule src="../js/menu-wc_es5.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

@@ -2,6 +2,7 @@ from flask import Flask
 from flask_cors import CORS
 from routes.inventory_routes import inventory_bp
 from routes.supplier_routes import supplier_bp
+from routes.sales_routes import sales_bp
 
 app = Flask(__name__)
 
@@ -12,6 +13,7 @@ CORS(app, origins=['http://localhost:4200'],
 # Register Blueprints
 app.register_blueprint(inventory_bp, url_prefix="/api")
 app.register_blueprint(supplier_bp, url_prefix="/api")
+app.register_blueprint(sales_bp, url_prefix="/api") 
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0',debug=True, port=5001)

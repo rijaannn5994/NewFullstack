@@ -1,253 +1,275 @@
 <div class="min-h-screen bg-gray-50">
   <app-navigation [currentPage]="'pos'"></app-navigation>
 
-  <div class="flex h-[calc(100vh-73px)]">
+  <div class="bg-white border-b border-gray-200 px-6 py-3 flex gap-4">
+    <button (click)="switchToPos()" [class]="viewMode === 'pos' ? 'bg-gray-900 text-white px-4 py-2 rounded-xl text-sm font-bold shadow-md' : 'bg-gray-100 text-gray-600 hover:bg-gray-200 px-4 py-2 rounded-xl text-sm font-semibold transition-colors'">
+      Point of Sale
+    </button>
+    <button (click)="switchToHistory()" [class]="viewMode === 'history' ? 'bg-gray-900 text-white px-4 py-2 rounded-xl text-sm font-bold shadow-md' : 'bg-gray-100 text-gray-600 hover:bg-gray-200 px-4 py-2 rounded-xl text-sm font-semibold transition-colors'">
+      Sales History
+    </button>
+  </div>
 
-    <!-- ===== LEFT PANEL: Items ===== -->
-    <div class="flex-1 flex flex-col min-w-0 overflow-hidden">
+  <div class="flex h-[calc(100vh-129px)]">
 
-      <!-- Top bar: search + category filter -->
-      <div class="bg-white border-b border-gray-200 px-6 py-4 flex items-center gap-4 shrink-0">
-        <!-- Search -->
-        <div class="relative flex-1 max-w-md">
-          <svg class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0"/>
-          </svg>
-          <input
-            type="text"
-            [(ngModel)]="searchTerm"
-            (ngModelChange)="onSearch()"
-            placeholder="Search items..."
-            class="w-full pl-9 pr-4 py-2.5 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-gray-900 focus:border-transparent bg-gray-50"
-          />
-          <button *ngIf="searchTerm" (click)="searchTerm=''; applyFilter()" class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-700">
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
-          </button>
-        </div>
+    <ng-container *ngIf="viewMode === 'pos'">
+      <div class="flex-1 flex flex-col min-w-0 overflow-hidden">
 
-        <!-- Category Pills -->
-        <div class="flex items-center gap-2 overflow-x-auto pb-0.5 flex-1">
-          <button
-            (click)="selectedCategory='all'; onCategoryChange()"
-            [class]="selectedCategory === 'all'
-              ? 'px-4 py-2 rounded-xl text-sm font-semibold bg-gray-900 text-white shadow-md shrink-0'
-              : 'px-4 py-2 rounded-xl text-sm font-semibold bg-white border border-gray-200 text-gray-600 hover:border-gray-400 hover:text-gray-900 transition-colors shrink-0'"
-          >All</button>
-          <button
-            *ngFor="let cat of categories"
-            (click)="selectedCategory=cat; onCategoryChange()"
-            [class]="selectedCategory === cat
-              ? 'px-4 py-2 rounded-xl text-sm font-semibold bg-gray-900 text-white shadow-md shrink-0'
-              : 'px-4 py-2 rounded-xl text-sm font-semibold bg-white border border-gray-200 text-gray-600 hover:border-gray-400 hover:text-gray-900 transition-colors shrink-0'"
-          >{{ cat }}</button>
-        </div>
+        <div class="bg-white border-b border-gray-200 px-6 py-4 flex items-center gap-4 shrink-0">
+          <div class="relative flex-1 max-w-md">
+            <svg class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0"/>
+            </svg>
+            <input
+              type="text"
+              [(ngModel)]="searchTerm"
+              (ngModelChange)="onSearch()"
+              placeholder="Search items..."
+              class="w-full pl-9 pr-4 py-2.5 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-gray-900 focus:border-transparent bg-gray-50"
+            />
+            <button *ngIf="searchTerm" (click)="searchTerm=''; applyFilter()" class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-700">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+            </button>
+          </div>
 
-        <!-- Count -->
-        <div class="text-sm text-gray-500 shrink-0 font-medium">
-          {{ filteredItems.length }} item{{ filteredItems.length !== 1 ? 's' : '' }}
-        </div>
-      </div>
+          <div class="flex items-center gap-2 overflow-x-auto pb-0.5 flex-1">
+            <button
+              (click)="selectedCategory='all'; onCategoryChange()"
+              [class]="selectedCategory === 'all'
+                ? 'px-4 py-2 rounded-xl text-sm font-semibold bg-gray-900 text-white shadow-md shrink-0'
+                : 'px-4 py-2 rounded-xl text-sm font-semibold bg-white border border-gray-200 text-gray-600 hover:border-gray-400 hover:text-gray-900 transition-colors shrink-0'"
+            >All</button>
+            <button
+              *ngFor="let cat of categories"
+              (click)="selectedCategory=cat; onCategoryChange()"
+              [class]="selectedCategory === cat
+                ? 'px-4 py-2 rounded-xl text-sm font-semibold bg-gray-900 text-white shadow-md shrink-0'
+                : 'px-4 py-2 rounded-xl text-sm font-semibold bg-white border border-gray-200 text-gray-600 hover:border-gray-400 hover:text-gray-900 transition-colors shrink-0'"
+            >{{ cat }}</button>
+          </div>
 
-      <!-- Error -->
-      <div *ngIf="error" class="mx-6 mt-4 bg-red-50 border border-red-200 rounded-xl px-4 py-3">
-        <p class="text-red-700 text-sm font-medium">{{ error }}</p>
-      </div>
-
-      <!-- Item Grid -->
-      <div class="flex-1 overflow-y-auto p-6">
-
-        <!-- Loading -->
-        <div *ngIf="isLoadingItems" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
-          <div *ngFor="let n of [1,2,3,4,5,6,7,8,9,10]" class="bg-white rounded-2xl border border-gray-100 overflow-hidden animate-pulse">
-            <div class="aspect-square bg-gray-100"></div>
-            <div class="p-3 space-y-2">
-              <div class="h-3 bg-gray-100 rounded-full w-3/4"></div>
-              <div class="h-3 bg-gray-100 rounded-full w-1/2"></div>
-            </div>
+          <div class="text-sm text-gray-500 shrink-0 font-medium">
+            {{ filteredItems.length }} item{{ filteredItems.length !== 1 ? 's' : '' }}
           </div>
         </div>
 
-        <!-- Items -->
-        <div *ngIf="!isLoadingItems" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
-          <div
-            *ngFor="let item of filteredItems"
-            (click)="addToCart(item)"
-            class="group bg-white rounded-2xl border border-gray-100 overflow-hidden cursor-pointer transition-all duration-200 hover:shadow-lg hover:border-gray-300 hover:-translate-y-0.5 relative"
-          >
-            <!-- In-cart badge -->
-            <div *ngIf="isInCart(item.item_id)" class="absolute top-2 left-2 z-10 w-6 h-6 bg-gray-900 text-white rounded-full flex items-center justify-center text-xs font-bold shadow-md">
-              {{ getCartQty(item.item_id) }}
-            </div>
+        <div *ngIf="error" class="mx-6 mt-4 bg-red-50 border border-red-200 rounded-xl px-4 py-3">
+          <p class="text-red-700 text-sm font-medium">{{ error }}</p>
+        </div>
 
-            <!-- Image -->
-            <div class="aspect-square bg-gradient-to-br from-gray-50 to-gray-100 overflow-hidden relative">
-              <img
-                *ngIf="item.photos && item.photos.length > 0"
-                [src]="getPhotoUrl(item.photos[0])"
-                [alt]="item.item_name"
-                class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-              />
-              <div *ngIf="!item.photos || item.photos.length === 0" class="w-full h-full flex flex-col items-center justify-center gap-2">
-                <svg class="w-10 h-10 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/>
-                </svg>
-                <span class="text-[10px] text-gray-400 font-medium">No image</span>
+        <div class="flex-1 overflow-y-auto p-6">
+
+          <div *ngIf="isLoadingItems" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
+            <div *ngFor="let n of [1,2,3,4,5,6,7,8,9,10]" class="bg-white rounded-2xl border border-gray-100 overflow-hidden animate-pulse">
+              <div class="aspect-square bg-gray-100"></div>
+              <div class="p-3 space-y-2">
+                <div class="h-3 bg-gray-100 rounded-full w-3/4"></div>
+                <div class="h-3 bg-gray-100 rounded-full w-1/2"></div>
+              </div>
+            </div>
+          </div>
+
+          <div *ngIf="!isLoadingItems" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
+            <div
+              *ngFor="let item of filteredItems"
+              (click)="addToCart(item)"
+              class="group bg-white rounded-2xl border border-gray-100 overflow-hidden cursor-pointer transition-all duration-200 hover:shadow-lg hover:border-gray-300 hover:-translate-y-0.5 relative"
+            >
+              <div *ngIf="isInCart(item.item_id)" class="absolute top-2 left-2 z-10 w-6 h-6 bg-gray-900 text-white rounded-full flex items-center justify-center text-xs font-bold shadow-md">
+                {{ getCartQty(item.item_id) }}
               </div>
 
-              <!-- Add overlay on hover -->
-              <div class="absolute inset-0 bg-gray-900 bg-opacity-0 group-hover:bg-opacity-10 transition-all duration-200 flex items-center justify-center">
-                <div class="opacity-0 group-hover:opacity-100 transition-opacity duration-200 bg-gray-900 text-white text-xs font-bold px-3 py-1.5 rounded-full shadow-lg">
-                  + Add to cart
+              <div class="aspect-square bg-gradient-to-br from-gray-50 to-gray-100 overflow-hidden relative">
+                <img
+                  *ngIf="item.photos && item.photos.length > 0"
+                  [src]="getPhotoUrl(item.photos[0])"
+                  [alt]="item.item_name"
+                  class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                />
+                <div *ngIf="!item.photos || item.photos.length === 0" class="w-full h-full flex flex-col items-center justify-center gap-2">
+                  <svg class="w-10 h-10 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/>
+                  </svg>
+                  <span class="text-[10px] text-gray-400 font-medium">No image</span>
+                </div>
+
+                <div class="absolute inset-0 bg-gray-900 bg-opacity-0 group-hover:bg-opacity-10 transition-all duration-200 flex items-center justify-center">
+                  <div class="opacity-0 group-hover:opacity-100 transition-opacity duration-200 bg-gray-900 text-white text-xs font-bold px-3 py-1.5 rounded-full shadow-lg">
+                    + Add to cart
+                  </div>
+                </div>
+
+                <div class="absolute top-2 right-2">
+                  <span [class]="'text-[9px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full border ' + getStockClass(item)">
+                    {{ getStockLabel(item) }}
+                  </span>
                 </div>
               </div>
 
-              <!-- Stock badge -->
-              <div class="absolute top-2 right-2">
-                <span [class]="'text-[9px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full border ' + getStockClass(item)">
-                  {{ getStockLabel(item) }}
-                </span>
-              </div>
-            </div>
-
-            <!-- Info -->
-            <div class="p-3">
-              <p class="font-bold text-gray-900 text-xs leading-tight line-clamp-2 mb-1">{{ item.item_name }}</p>
-              <p class="text-[10px] text-gray-400 mb-2 truncate">{{ item.category }}</p>
-              <div class="flex items-center justify-between">
-                <span class="font-bold text-gray-900 text-sm">£{{ item.unit_price.toFixed(2) }}</span>
-                <span class="text-[10px] text-gray-400">{{ item.quantity_in_stock }} left</span>
+              <div class="p-3">
+                <p class="font-bold text-gray-900 text-xs leading-tight line-clamp-2 mb-1">{{ item.item_name }}</p>
+                <p class="text-[10px] text-gray-400 mb-2 truncate">{{ item.category }}</p>
+                <div class="flex items-center justify-between">
+                  <span class="font-bold text-gray-900 text-sm">£{{ item.unit_price.toFixed(2) }}</span>
+                  <span class="text-[10px] text-gray-400">{{ item.quantity_in_stock }} left</span>
+                </div>
               </div>
             </div>
           </div>
-        </div>
 
-        <!-- Empty -->
-        <div *ngIf="!isLoadingItems && filteredItems.length === 0" class="flex flex-col items-center justify-center py-24 text-center">
-          <div class="w-20 h-20 bg-gray-100 rounded-full flex items-center justify-center mb-4">
-            <svg class="w-10 h-10 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
-            </svg>
-          </div>
-          <p class="text-gray-500 font-semibold">No items found</p>
-          <p class="text-gray-400 text-sm mt-1">Try a different search or category</p>
-        </div>
-      </div>
-    </div>
-
-    <!-- ===== RIGHT PANEL: Cart ===== -->
-    <div class="w-[360px] shrink-0 bg-white border-l border-gray-200 flex flex-col">
-
-      <!-- Cart Header -->
-      <div class="px-6 py-5 border-b border-gray-100">
-        <div class="flex items-center justify-between">
-          <div class="flex items-center gap-2">
-            <div class="w-8 h-8 bg-gray-900 rounded-lg flex items-center justify-center">
-              <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"/>
+          <div *ngIf="!isLoadingItems && filteredItems.length === 0" class="flex flex-col items-center justify-center py-24 text-center">
+            <div class="w-20 h-20 bg-gray-100 rounded-full flex items-center justify-center mb-4">
+              <svg class="w-10 h-10 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
               </svg>
             </div>
-            <h2 class="font-bold text-gray-900 text-lg">Order</h2>
-            <span *ngIf="cart.length > 0" class="bg-gray-900 text-white text-xs font-bold px-2 py-0.5 rounded-full min-w-[22px] text-center">
-              {{ totalItems }}
-            </span>
+            <p class="text-gray-500 font-semibold">No items found</p>
+            <p class="text-gray-400 text-sm mt-1">Try a different search or category</p>
           </div>
-          <button *ngIf="cart.length > 0" (click)="clearCart()" class="text-xs text-red-500 hover:text-red-700 font-semibold transition-colors">
-            Clear all
-          </button>
         </div>
       </div>
 
-      <!-- Empty Cart -->
-      <div *ngIf="cart.length === 0" class="flex-1 flex flex-col items-center justify-center text-center px-6">
-        <div class="w-20 h-20 bg-gray-50 rounded-full flex items-center justify-center mb-4 border-2 border-dashed border-gray-200">
-          <svg class="w-9 h-9 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"/>
-          </svg>
-        </div>
-        <p class="text-gray-500 font-semibold text-sm">Cart is empty</p>
-        <p class="text-gray-400 text-xs mt-1">Click items on the left to add them</p>
-      </div>
+      <div class="w-[360px] shrink-0 bg-white border-l border-gray-200 flex flex-col">
 
-      <!-- Cart Items -->
-      <div *ngIf="cart.length > 0" class="flex-1 overflow-y-auto divide-y divide-gray-50">
-        <div *ngFor="let cartItem of cart" class="flex items-center gap-3 px-5 py-3.5 hover:bg-gray-50 transition-colors">
-          <!-- Thumbnail -->
-          <div class="w-12 h-12 rounded-xl bg-gray-100 overflow-hidden shrink-0">
-            <img *ngIf="cartItem.item.photos && cartItem.item.photos.length > 0" [src]="getPhotoUrl(cartItem.item.photos[0])" class="w-full h-full object-cover"/>
-            <div *ngIf="!cartItem.item.photos || cartItem.item.photos.length === 0" class="w-full h-full flex items-center justify-center">
-              <svg class="w-5 h-5 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/>
-              </svg>
+        <div class="px-6 py-5 border-b border-gray-100">
+          <div class="flex items-center justify-between">
+            <div class="flex items-center gap-2">
+              <div class="w-8 h-8 bg-gray-900 rounded-lg flex items-center justify-center">
+                <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"/>
+                </svg>
+              </div>
+              <h2 class="font-bold text-gray-900 text-lg">Order</h2>
+              <span *ngIf="cart.length > 0" class="bg-gray-900 text-white text-xs font-bold px-2 py-0.5 rounded-full min-w-[22px] text-center">
+                {{ totalItems }}
+              </span>
             </div>
-          </div>
-
-          <!-- Name + Controls -->
-          <div class="flex-1 min-w-0">
-            <p class="font-semibold text-gray-900 text-xs truncate">{{ cartItem.item.item_name }}</p>
-            <p class="text-[10px] text-gray-400 mb-1.5">£{{ cartItem.item.unit_price.toFixed(2) }} each</p>
-            <div class="flex items-center gap-1.5">
-              <button (click)="updateQuantity(cartItem, -1)" class="w-6 h-6 rounded-lg bg-gray-100 hover:bg-gray-200 flex items-center justify-center text-gray-700 font-bold text-sm transition-colors">−</button>
-              <input
-                type="number"
-                [value]="cartItem.quantity"
-                (change)="setQuantity(cartItem, +$any($event.target).value)"
-                class="w-9 text-center text-xs font-bold border border-gray-200 rounded-lg py-1 focus:outline-none focus:ring-1 focus:ring-gray-900"
-                min="1" [max]="cartItem.item.quantity_in_stock"
-              />
-              <button (click)="updateQuantity(cartItem, 1)" class="w-6 h-6 rounded-lg bg-gray-100 hover:bg-gray-200 flex items-center justify-center text-gray-700 font-bold text-sm transition-colors">+</button>
-            </div>
-          </div>
-
-          <!-- Total + Remove -->
-          <div class="text-right shrink-0">
-            <p class="font-bold text-gray-900 text-sm">£{{ (cartItem.item.unit_price * cartItem.quantity).toFixed(2) }}</p>
-            <button (click)="removeFromCart(cartItem.item.item_id)" class="mt-1.5 text-gray-300 hover:text-red-500 transition-colors">
-              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
-              </svg>
+            <button *ngIf="cart.length > 0" (click)="clearCart()" class="text-xs text-red-500 hover:text-red-700 font-semibold transition-colors">
+              Clear all
             </button>
           </div>
         </div>
+
+        <div *ngIf="cart.length === 0" class="flex-1 flex flex-col items-center justify-center text-center px-6">
+          <div class="w-20 h-20 bg-gray-50 rounded-full flex items-center justify-center mb-4 border-2 border-dashed border-gray-200">
+            <svg class="w-9 h-9 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"/>
+            </svg>
+          </div>
+          <p class="text-gray-500 font-semibold text-sm">Cart is empty</p>
+          <p class="text-gray-400 text-xs mt-1">Click items on the left to add them</p>
+        </div>
+
+        <div *ngIf="cart.length > 0" class="flex-1 overflow-y-auto divide-y divide-gray-50">
+          <div *ngFor="let cartItem of cart" class="flex items-center gap-3 px-5 py-3.5 hover:bg-gray-50 transition-colors">
+            <div class="w-12 h-12 rounded-xl bg-gray-100 overflow-hidden shrink-0">
+              <img *ngIf="cartItem.item.photos && cartItem.item.photos.length > 0" [src]="getPhotoUrl(cartItem.item.photos[0])" class="w-full h-full object-cover"/>
+              <div *ngIf="!cartItem.item.photos || cartItem.item.photos.length === 0" class="w-full h-full flex items-center justify-center">
+                <svg class="w-5 h-5 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/>
+                </svg>
+              </div>
+            </div>
+
+            <div class="flex-1 min-w-0">
+              <p class="font-semibold text-gray-900 text-xs truncate">{{ cartItem.item.item_name }}</p>
+              <p class="text-[10px] text-gray-400 mb-1.5">£{{ cartItem.item.unit_price.toFixed(2) }} each</p>
+              <div class="flex items-center gap-1.5">
+                <button (click)="updateQuantity(cartItem, -1)" class="w-6 h-6 rounded-lg bg-gray-100 hover:bg-gray-200 flex items-center justify-center text-gray-700 font-bold text-sm transition-colors">−</button>
+                <input
+                  type="number"
+                  [value]="cartItem.quantity"
+                  (change)="setQuantity(cartItem, +$any($event.target).value)"
+                  class="w-9 text-center text-xs font-bold border border-gray-200 rounded-lg py-1 focus:outline-none focus:ring-1 focus:ring-gray-900"
+                  min="1" [max]="cartItem.item.quantity_in_stock"
+                />
+                <button (click)="updateQuantity(cartItem, 1)" class="w-6 h-6 rounded-lg bg-gray-100 hover:bg-gray-200 flex items-center justify-center text-gray-700 font-bold text-sm transition-colors">+</button>
+              </div>
+            </div>
+
+            <div class="text-right shrink-0">
+              <p class="font-bold text-gray-900 text-sm">£{{ (cartItem.item.unit_price * cartItem.quantity).toFixed(2) }}</p>
+              <button (click)="removeFromCart(cartItem.item.item_id)" class="mt-1.5 text-gray-300 hover:text-red-500 transition-colors">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+                </svg>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div *ngIf="cart.length > 0" class="border-t border-gray-100 p-5 space-y-3 bg-gray-50">
+          <div class="flex justify-between text-sm text-gray-500">
+            <span>Subtotal</span>
+            <span class="font-semibold text-gray-900">£{{ subtotal.toFixed(2) }}</span>
+          </div>
+          <div class="flex justify-between text-sm text-gray-500">
+            <span>VAT (20%)</span>
+            <span class="font-semibold text-gray-900">£{{ vatAmount.toFixed(2) }}</span>
+          </div>
+          <div class="flex justify-between text-base font-bold text-gray-900 pt-2 border-t border-gray-200">
+            <span>Total</span>
+            <span class="text-xl">£{{ total.toFixed(2) }}</span>
+          </div>
+
+          <button
+            (click)="processSale()"
+            [disabled]="isProcessing"
+            class="w-full py-4 bg-gray-900 text-white rounded-xl hover:bg-gray-800 disabled:opacity-60 disabled:cursor-not-allowed transition-all font-bold text-sm shadow-lg flex items-center justify-center gap-2 mt-1"
+          >
+            <svg *ngIf="!isProcessing" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+            </svg>
+            <div *ngIf="isProcessing" class="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+            {{ isProcessing ? 'Processing...' : 'Process Sale · £' + total.toFixed(2) }}
+          </button>
+
+          <p class="text-center text-[10px] text-gray-400">Served by <span class="font-semibold text-gray-600">{{ username }}</span></p>
+        </div>
       </div>
+    </ng-container>
 
-      <!-- Totals + Checkout -->
-      <div *ngIf="cart.length > 0" class="border-t border-gray-100 p-5 space-y-3 bg-gray-50">
-        <div class="flex justify-between text-sm text-gray-500">
-          <span>Subtotal</span>
-          <span class="font-semibold text-gray-900">£{{ subtotal.toFixed(2) }}</span>
-        </div>
-        <div class="flex justify-between text-sm text-gray-500">
-          <span>VAT (20%)</span>
-          <span class="font-semibold text-gray-900">£{{ vatAmount.toFixed(2) }}</span>
-        </div>
-        <div class="flex justify-between text-base font-bold text-gray-900 pt-2 border-t border-gray-200">
-          <span>Total</span>
-          <span class="text-xl">£{{ total.toFixed(2) }}</span>
-        </div>
+    <ng-container *ngIf="viewMode === 'history'">
+      <div class="flex-1 p-8 overflow-y-auto w-full max-w-6xl mx-auto">
+        <h1 class="text-2xl font-bold text-gray-900 mb-6">Sales History</h1>
+        
+        <div *ngIf="isLoadingHistory" class="text-center py-10">Loading history...</div>
+        <div *ngIf="!isLoadingHistory && salesHistory.length === 0" class="text-center py-10 text-gray-500">No sales recorded yet.</div>
 
-        <button
-          (click)="processSale()"
-          [disabled]="isProcessing"
-          class="w-full py-4 bg-gray-900 text-white rounded-xl hover:bg-gray-800 disabled:opacity-60 disabled:cursor-not-allowed transition-all font-bold text-sm shadow-lg flex items-center justify-center gap-2 mt-1"
-        >
-          <svg *ngIf="!isProcessing" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
-          </svg>
-          <div *ngIf="isProcessing" class="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
-          {{ isProcessing ? 'Processing...' : 'Process Sale · £' + total.toFixed(2) }}
-        </button>
-
-        <!-- Served by -->
-        <p class="text-center text-[10px] text-gray-400">Served by <span class="font-semibold text-gray-600">{{ username }}</span></p>
+        <div *ngIf="!isLoadingHistory && salesHistory.length > 0" class="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden">
+          <table class="w-full text-left border-collapse">
+            <thead>
+              <tr class="bg-gray-50 text-gray-500 text-xs uppercase tracking-wider">
+                <th class="p-4 border-b border-gray-200">Sale ID</th>
+                <th class="p-4 border-b border-gray-200">Date</th>
+                <th class="p-4 border-b border-gray-200">Served By</th>
+                <th class="p-4 border-b border-gray-200">Items Sold</th>
+                <th class="p-4 border-b border-gray-200 text-right">Total (£)</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-gray-100 text-sm">
+              <tr *ngFor="let sale of salesHistory" class="hover:bg-gray-50 transition-colors">
+                <td class="p-4 font-mono font-medium text-gray-900">{{ sale.saleId }}</td>
+                <td class="p-4 text-gray-600">{{ sale.date | date:'dd/MM/yyyy HH:mm' }}</td>
+                <td class="p-4 text-gray-600">{{ sale.servedBy || 'System' }}</td>
+                <td class="p-4 text-gray-600">
+                  <span *ngFor="let i of sale.items; let last = last">
+                    {{i.quantity}}x {{i.item_name}}{{last ? '' : ', '}}
+                  </span>
+                </td>
+                <td class="p-4 font-bold text-gray-900 text-right">£{{ sale.total.toFixed(2) }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </div>
-    </div>
+    </ng-container>
+
   </div>
 
-  <!-- ===== BILL MODAL ===== -->
   <div *ngIf="showBill && currentSale" class="fixed inset-0 bg-black bg-opacity-60 z-50 flex items-center justify-center p-6" (click)="closeBill()">
     <div class="bg-white rounded-3xl max-w-md w-full max-h-[90vh] overflow-y-auto shadow-2xl" (click)="$event.stopPropagation()" id="bill-printable">
 
-      <!-- Receipt top -->
       <div class="pt-8 pb-6 px-8 text-center border-b border-dashed border-gray-200">
         <div class="w-14 h-14 bg-gray-900 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg">
           <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -273,7 +295,6 @@
         </div>
       </div>
 
-      <!-- Items -->
       <div class="px-8 py-5">
         <p class="text-[10px] uppercase tracking-wider font-bold text-gray-400 mb-3">Items Purchased</p>
         <div class="space-y-3">
@@ -287,7 +308,6 @@
         </div>
       </div>
 
-      <!-- Totals -->
       <div class="mx-8 border-t border-dashed border-gray-200 pt-4 pb-2 space-y-2">
         <div class="flex justify-between text-sm text-gray-500">
           <span>Subtotal</span>
@@ -305,7 +325,6 @@
 
       <p class="text-center text-xs text-gray-400 py-5">Thank you for your purchase! 🎉</p>
 
-      <!-- Actions -->
       <div class="px-8 pb-8 flex gap-3 no-print">
         <button (click)="closeBill()" class="flex-1 py-3 bg-gray-100 text-gray-700 rounded-xl hover:bg-gray-200 transition-colors font-semibold text-sm">
           New Sale

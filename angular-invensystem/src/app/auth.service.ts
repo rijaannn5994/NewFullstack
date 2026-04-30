@@ -14,6 +14,8 @@ export interface AuthResponse {
 })
 export class AuthService {
   private apiUrl = 'http://localhost:5000/api';
+  
+  // State management to track user session instantly across the app
   private isAuthenticatedSubject = new BehaviorSubject<boolean>(false);
   private userRoleSubject = new BehaviorSubject<'Admin' | 'Staff' | null>(null);
   private usernameSubject = new BehaviorSubject<string | null>(null);
@@ -26,7 +28,7 @@ export class AuthService {
     this.checkExistingSession();
   }
 
-  // --- Cookie Helpers ---
+  //  Cookie Helpers (Used to store session data in the browser)
   private setCookie(name: string, value: string, days: number = 7): void {
     const expires = new Date(Date.now() + days * 864e5).toUTCString();
     document.cookie = `${name}=${encodeURIComponent(value)}; expires=${expires}; path=/; SameSite=Strict`;
@@ -41,7 +43,9 @@ export class AuthService {
     document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
   }
 
-  // --- Session ---
+  //  Session Management 
+  
+  // Restores the user session from cookies when the app first loads
   private checkExistingSession(): void {
     const token = this.getCookie('authToken');
     const role = this.getCookie('userRole') as 'Admin' | 'Staff' | null;
@@ -54,6 +58,7 @@ export class AuthService {
     }
   }
 
+  // Attempts backend login, but falls back to mock credentials if the server fails/is offline
   login(username: string, password: string): Observable<AuthResponse> {
     return this.http.post<AuthResponse>(`${this.apiUrl}/auth/login`, { username, password })
       .pipe(
@@ -73,15 +78,18 @@ export class AuthService {
       );
   }
 
+  // Updates both cookies and Angular state subjects
   private saveSession(response: AuthResponse): void {
     this.setCookie('authToken', response.token);
     this.setCookie('userRole', response.role);
     this.setCookie('username', response.username);
+    
     this.isAuthenticatedSubject.next(true);
     this.userRoleSubject.next(response.role);
     this.usernameSubject.next(response.username);
   }
 
+  // Notifies the backend, then clears local data regardless of success
   logout(): Observable<any> {
     return this.http.post(`${this.apiUrl}/auth/logout`, {})
       .pipe(
@@ -94,11 +102,13 @@ export class AuthService {
     this.deleteCookie('authToken');
     this.deleteCookie('userRole');
     this.deleteCookie('username');
+    
     this.isAuthenticatedSubject.next(false);
     this.userRoleSubject.next(null);
     this.usernameSubject.next(null);
   }
 
+  //  Quick Getters 
   getToken(): string | null {
     return this.getCookie('authToken');
   }
