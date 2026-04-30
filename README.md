@@ -1,86 +1,158 @@
-# InvenSystem - Full Stack Inventory Management
-A robust, full-stack inventory management system featuring a Flask (Python) backend and an Angular 17+ frontend. The application includes role-based access control (RBAC), a point-of-sale (POS) interface, and automated technical documentation.
+# InvenSystem - Full Stack Inventory Management System
 
-### Features
-Authentication & RBAC: Secure login with distinct views and permissions for Admin and Staff roles.
+A robust full-stack inventory management application built with a **Flask (Python) backend** and an **Angular frontend**. The system provides secure authentication, role-based access control, inventory and supplier management, a point-of-sale (POS) interface, automated testing, and technical documentation.
 
-Inventory Management: Full CRUD operations for stock items, including categories, reorder levels, and specifications.
+---
 
-Supplier Tracking: Management of supplier contact details and linked inventory items.
+## Features
 
-POS System: Dynamic point-of-sale interface with real-time stock filtering.
+### Authentication & Role-Based Access Control
+- Secure login system
+- Separate dashboards and permissions for:
+  - **Admin**
+  - **Staff**
 
-Automated Documentation: Technical code documentation generated via Compodoc.
+### Inventory Management
+- Full CRUD functionality for stock items
+- Product categories
+- Reorder level monitoring
+- Item specifications and details
+- Real-time stock updates
 
-Unit Testing: Automated frontend testing suite using Jasmine and Karma.
+### Supplier Management
+- Add, edit, view, and delete suppliers
+- Supplier contact information tracking
+- Supplier-linked inventory records
 
-### Tech Stack
-#### Frontend
-Framework: Angular (Standalone Components)
+### Point of Sale (POS)
+- Fast billing interface
+- Dynamic product search/filtering
+- Real-time stock deduction after sales
 
-Styling: Tailwind CSS
+### Testing & Quality Assurance
+- Frontend unit testing using **Jasmine** and **Karma**
+- API integration testing
+- Coverage reports supported
 
-State Management: RxJS BehaviorSubjects
+### Technical Documentation
+- Auto-generated project documentation using **Compodoc**
 
-Testing: Jasmine & Karma
+---
 
-Documentation: Compodoc
+## Tech Stack
 
-Backend
-Framework: Flask (Python)
+## Frontend
+- **Framework:** Angular (Standalone Components)
+- **Styling:** Tailwind CSS
+- **Reactive State:** RxJS BehaviorSubjects
+- **Testing:** Jasmine & Karma
+- **Documentation:** Compodoc
 
-Database: MongoDB
+## Backend
+- **Framework:** Flask (Python)
+- **Database:** MongoDB
+- **Authentication:** Custom Middleware (Headers & Cookies)
+- **CORS Support:** Flask-CORS
 
-Authentication: Custom Middleware (Headers & Cookies)
+---
 
-Tools: Flask-CORS
+# Installation & Setup
 
-## Installation & Setup
-### 1. Prerequisites
-Node.js (v18+)
+## 1. Prerequisites
 
-Python (3.9+)
+Make sure the following are installed:
 
-MongoDB (Running locally or via Atlas)
+- Node.js (v18+)
+- Python (v3.9+)
+- MongoDB (Local or MongoDB Atlas)
 
-### 2. Backend Setup (Flask)
-Bash
+---
+
+## 2. Backend Setup (Flask)
+
+```bash
 cd backend
-
-# Install dependencies
 pip install flask flask-cors pymongo
-
-### Run the server (default: http://localhost:5001)
 python app.py
-### 3. Frontend Setup (Angular)
-Bash
+```
+
+## Backend runs on:
+
+```test
+http://localhost:5001
+```
+## 3. Frontend Setup (Angular)
+```bash
 cd frontend
-# Install dependencies
 npm install
-
-# Start the development server
 ng serve
-Navigate to http://localhost:4200/.
+```
+## Frontend runs on:
 
-## Testing & Documentation
-Running Frontend Tests
-To run the Jasmine unit tests and generate a coverage report:
+```test
+http://localhost:4200
+```
+## Running Tests
+## Frontend Unit Tests
+```bash
+  ng test --code-coverage
+```
+And We can view our testing
 
-Bash
-ng test --code-coverage
-The report will be available in the /coverage folder.
+```test
+cd frontend
+http://localhost:4200/home
+```
+to
+```test
+cd frontend
+http://localhost:4200/test
+```
 
-Generating Documentation
-To regenerate the Compodoc technical documentation:
+## Coverage report generated in:
 
-Bash
-npx compodoc -p tsconfig.app.json -d documentation
-Open documentation/index.html to view the structure of the application.
+Generate Technical Documentation
+```test
+cd frontend
+npx run compodoc 
+```
 
-## Credentials (Development)
-Admin: admin / admin
+## Report is generated in:
 
-Staff: staff / staff
+```bash
+http://localhost:8080
+http://127.0.0.1:8080
+// in port 8080.
+```  
 
-## License
-This project was developed as part of a technical assignment. All rights reserved.
+## Project Structure
+```text
+NewFullstack/
+├── NewFullstackProj/             # Flask Backend
+│   ├── app.py                    # Main Flask application entry point
+│   ├── config.py                 # Environment and DB configuration
+│   ├── db.py                     # MongoDB connection setup
+│   ├── dummydata.py              # Script to seed database
+│   ├── routes/                   # API Endpoints (inventory_routes, supplier_routes)
+│   └── utils/                    # Helper functions (auth decorators)
+│
+└── angular-invensystem/          # Angular Frontend
+    ├── src/app/                  # Application Logic
+    │   ├── auth.service.ts       # Authentication state management
+    │   ├── auth.interceptor.ts   # HTTP Interceptor for headers/cookies
+    │   ├── inventory/            # Inventory CRUD components
+    │   ├── pos/                  # Point of Sale components
+    │   └── supplier/             # Supplier management components
+    ├── tailwind.config.js        # UI Styling configuration
+    └── package.json              # Frontend dependencies
+
+```
+## Key Functional Modules
+- Authentication System
+- Inventory CRUD
+- Supplier CRUD
+- POS Billing
+- Role-Based Dashboards
+- Route Protection
+- HTTP Interceptors
+- Automated Testing
